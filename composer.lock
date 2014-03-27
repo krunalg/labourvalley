@@ -227,12 +227,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ZF-Commons/ZfcUser.git",
-                "reference": "5589c505834a958ef4f7ee68d9d092053cd3493f"
+                "reference": "48c2f8da34df09387c7563fb87a183b91a8a1126"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ZF-Commons/ZfcUser/zipball/5589c505834a958ef4f7ee68d9d092053cd3493f",
-                "reference": "5589c505834a958ef4f7ee68d9d092053cd3493f",
+                "url": "https://api.github.com/repos/ZF-Commons/ZfcUser/zipball/48c2f8da34df09387c7563fb87a183b91a8a1126",
+                "reference": "48c2f8da34df09387c7563fb87a183b91a8a1126",
                 "shasum": ""
             },
             "require": {
@@ -288,7 +288,7 @@
             "keywords": [
                 "zf2"
             ],
-            "time": "2014-03-16 09:10:27"
+            "time": "2014-03-24 12:31:32"
         }
     ],
     "packages-dev": [
