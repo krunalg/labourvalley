@@ -10,15 +10,30 @@ namespace Admin\Controller;
 
 use Commons\Controller\AbstractController;
 use Zend\View\Model\ViewModel;
+use Admin\Form\LoginForm;
 
 class IndexController extends AbstractController
 {
 
     public function indexAction()
     {
+        $loginForm = new LoginForm();
         $layout = $this->layout('layout/login');
-        $view = new ViewModel();
-        $this->setTitle(array("Login"));
+        $view = new ViewModel(array(
+            'loginForm' => $loginForm
+        ));
+        $this->setTitle(array(
+            "Login"
+        ));
+        if($this->request->isPost()){
+        	if($loginForm->isValid()){
+                print_r($this->getRequest()->getPost());
+        	   exit;
+        	}else{
+        	    echo "fuck bhosdike";
+        	    exit;
+        	}
+        }
         return $view;
     }
 
