@@ -115,4 +115,10 @@ class User extends AbstractModel implements InputFilterAwareInterface
         
         return $this->inputFilter;
     }
+
+
+    public function getUser($username)
+    {
+        //fetch user
+    }
 }
