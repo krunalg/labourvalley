@@ -11,6 +11,8 @@ namespace Admin\Controller;
 use Commons\Controller\AbstractController;
 use Zend\View\Model\ViewModel;
 use Admin\Form\LoginForm;
+use Admin\Model\User;
+use Users\Model\UserTable;
 
 class IndexController extends AbstractController
 {
@@ -25,9 +27,13 @@ class IndexController extends AbstractController
         $this->setTitle(array(
             "Login"
         ));
-        if($this->request->isPost()){
+        $request = $this->getRequest();
+        if($request->isPost()){
+            $users = new User();
+            $loginForm->setInputFilter($users->getInputFilter());
+            $loginForm->setData($request->getPost());
         	if($loginForm->isValid()){
-                print_r($this->getRequest()->getPost());
+        	    $users->exchangeArray($loginForm->getData());
         	   exit;
         	}else{
         	    echo "fuck bhosdike";

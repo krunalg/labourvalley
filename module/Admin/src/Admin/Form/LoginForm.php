@@ -27,11 +27,6 @@ class LoginForm extends Form
             ),
             'options' => array(
                 'label' => 'Username'
-            ),
-            'filters' => array(
-                array(
-                    'name' => 'StringTrim'
-                )
             )
         ));
         $this->add(array(
@@ -44,11 +39,6 @@ class LoginForm extends Form
             ),
             'options' => array(
                 'label' => 'Password'
-            ),
-            'filters' => array(
-                array(
-                    'name' => 'StringTrim'
-                )
             )
         ));
         $submitButton = new Element\Button('submit');

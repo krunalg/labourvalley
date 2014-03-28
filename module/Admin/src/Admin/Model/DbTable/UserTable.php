@@ -3,18 +3,14 @@ namespace Users\Model;
 
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\ResultSet\ResultSet;
-use Zend\Db\TableGateway\TableGateway;
+use Commons\Model\DbTable\AbstractDbTable;
 
-class UserTable
+class UserTable extends AbstractDbTable
 {
 
-    protected $tableGateway;
-
-    public function __construct(TableGateway $tableGateway)
-    {
-        $this->tableGateway = $tableGateway;
-    }
-
+    protected $_table_name = "admin_users";
+    protected $_array_object_prototype = 'Admin\Model\User';
+    
     public function saveUser(User $user)
     {
         $data = array(
@@ -36,15 +32,14 @@ class UserTable
         }
     }
 
-    public function getUser($id)
+    public function getUser($username)
     {
-        $id = (int) $id;
         $rowset = $this->tableGateway->select(array(
-            'id' => $id
+            'username' => $username
         ));
         $row = $rowset->current();
         if (! $row) {
-            throw new \Exception("Could not find row $id");
+            throw new \Exception("Could not find user $username");
         }
         return $row;
     }
