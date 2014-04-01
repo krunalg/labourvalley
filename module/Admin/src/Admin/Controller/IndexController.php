@@ -10,29 +10,70 @@ namespace Admin\Controller;
 
 use Commons\Controller\AbstractController;
 use Zend\View\Model\ViewModel;
+use Admin\Form\LoginForm;
+use Admin\Model\User;
 
 class IndexController extends AbstractController
 {
 
     public function indexAction()
     {
+        $loginForm = new LoginForm();
         $layout = $this->layout('layout/login');
-        $view = new ViewModel();
-        $this->setTitle(array("Login"));
+        $view = new ViewModel(array(
+            'loginForm' => $loginForm
+        ));
+        $this->setTitle(array(
+            "Login"
+        ));
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $users = new User();
+            $loginForm->setInputFilter($users->getInputFilter());
+            $loginForm->setData($request->getPost());
+            try {
+                if ($loginForm->isValid()) {
+                    $sm = $this->getServiceLocator();
+                    $data = $loginForm->getData();
+                    $adapter = $sm->get('AuthAdapter');
+                    $adapter->setIdentity($data['username']);
+                    $adapter->setCredential($data['password']);
+                    
+                    $service = $sm->get('AuthService');
+                    $result = $service->authenticate($adapter);
+                    if ($result->isValid()) {
+                        $storage = $service->getStorage();
+                        $storage->write($adapter->getResultRowObject(null, 'password'));
+                        
+                        return $this->redirect()->toRoute('home');
+                    } else {
+                        $this->redirect()->toRoute('login');
+                    }
+                    return array(
+                        'form' => $loginForm,
+                        'error_message' => array_pop($result->getMessages())
+                    );
+                }
+            } catch (\Exception $ex) {
+                echo $ex->getMessage();
+            }
+        }
         return $view;
     }
 
-    public function registerAction()
+    public function homeAction()
     {
-        $view = new ViewModel();
-        $view->setTemplate('admin/index/register');
-        return $view;
+        $username = $this->getAuthService()
+            ->getStorage()
+            ->read();
+        $viewModel = new ViewModel(array(
+            'name' => $username
+        ));
+        return $viewModel;
     }
 
-    public function loginAction()
+    public function logoutAction()
     {
-        $view = new ViewModel();
-        $view->setTemplate('admin/index/login');
-        return $view;
+        return $this->redirect()->toRoute('login');
     }
 }

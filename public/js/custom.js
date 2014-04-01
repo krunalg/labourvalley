@@ -2,7 +2,7 @@ jQuery.noConflict();
 
 jQuery(document).ready(function(){
 	
-	prettyPrint();			//syntax highlighter
+	//prettyPrint();			//syntax highlighter
 	mainwrapperHeight();
 	responsive();
 	

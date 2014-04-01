@@ -92,7 +92,7 @@ h4 { font-size: 16px; line-height: 26px; }
 .plainwidget { margin: 10px; background: #fcfcfc; border: 1px solid #bbb; padding: 5px 10px; }
 .plainwidget .progress { margin: 5px 0; height: 10px; }
 
-.leftmenu { margin: 10px 0; }
+.leftmenu { margin: 0; }/*10px 0*/
 .leftmenu .nav-tabs li { border-bottom: 1px solid #bbb; margin: 0 1px 0 0; }
 .leftmenu .nav-tabs li:first-child { border-top: 1px solid #bbb; }
 .leftmenu .nav-tabs li a { border: 0; color: #666; text-shadow: 1px 1px rgba(255,255,255,0.3); }
@@ -1452,7 +1452,7 @@ body.loginbody { background: #f7f7f7 url(../img/gray_jean.png); }
 .loginwrapper input#username { background: #eee url(../img/username.png) no-repeat 8px 12px; }
 .loginwrapper input#password { background: #eee url(../img/password.png) no-repeat 8px 12px; }
 .loginwrapper input#username.error,
-.loginwrapper input#password.error { background-color: #ffeaea; color: #ff0000; }
+.loginwrapper input#password.error { /*background-color: #ffeaea;*/ color: #ff0000; }
 .loginwrapper input:focus { 
 	background-color: #fff;
 	color: #666 !important; 
@@ -1610,4 +1610,9 @@ body.loginbody { background: #f7f7f7 url(../img/gray_jean.png); }
 	.wizard .tabbedmenu li a span.label { display: none; }
 	.verwizard .verticalmenu { float: none; width: auto; margin-bottom: 20px; }
 	.verwizard .stepContainer, .verwizard .actionBar { margin-left: 0; }
+}
+/*------------custom css--------------*/
+label.error{
+	color:#ff0000!important;
+	text-shadow:0 -1px rgba(0, 0, 0, 0.2);
 }

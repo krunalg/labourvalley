@@ -9,7 +9,29 @@ chdir(dirname(__DIR__));
 if (php_sapi_name() === 'cli-server' && is_file(__DIR__ . parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH))) {
     return false;
 }
+// Set display errors to one
+ini_set ( 'display_errors', 1 );
+// Report all errors
+error_reporting ( E_ALL );
 
+// Initialize Request Microtime
+if (! defined ( 'REQUEST_MICROTIME' )) {
+    define ( 'REQUEST_MICROTIME', microtime ( true ) );
+}
+
+// Initialize Base Dir
+if (! defined ( 'BASE_DIR' )) {
+    define ( 'BASE_DIR', realpath ( __DIR__ . "/../" ) );
+}
+// Initialize DS - Directory Separator
+if (! defined ( 'DS' )) {
+    define ( 'DS', DIRECTORY_SEPARATOR );
+}
+// Define the application enviornment
+if (! defined ( 'APPLICATION_ENV' )) {
+    $envApplicationEnv = getenv ( 'APPLICATION_ENV' );
+    define ( 'APPLICATION_ENV', $envApplicationEnv ? $envApplicationEnv : "production" );
+}
 // Setup autoloading
 require 'init_autoloader.php';
 

@@ -1,81 +1,83 @@
 <?php echo $this->doctype(); ?>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <?php echo $this->headTitle("Administrator | LabourValley")->setSeparator(' - ')->setAutoEscape(false) ?>
+<head>
+<meta charset="utf-8">
+        <?php echo $this->headTitle("Administrator | GrubFiesta")->setSeparator(' - ')->setAutoEscape(false)?>
 
-        <?php echo $this->headMeta()
+        <?php
+        
+echo $this->headMeta()
             ->appendName('viewport', 'width=device-width, initial-scale=1.0')
-            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
-        ?>
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')?>
 
         <!-- Le styles -->
-        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
-                        ->prependStylesheet($this->basePath() . '/css/style.css')
-                        ->prependStylesheet($this->basePath() . '/css/style.default.css')
-                        ->prependStylesheet($this->basePath() . '/css/bootstrap-theme.min.css')
-                        ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css');
+        <?php
+        
+echo $this->headLink(array(
+            'rel' => 'shortcut icon',
+            'type' => 'image/vnd.microsoft.icon',
+            'href' => $this->basePath() . '/img/favicon.ico'
+        ))
+            ->prependStylesheet($this->basePath() . '/css/style.default.css')
+            ->prependStylesheet($this->basePath() . '/css/bootstrap-theme.min.css')
+            ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css')
+            ->prependStylesheet($this->basePath() . '/css/style.css');
+        
         ?>
-
         <!-- Scripts -->
-        <?php echo $this->headScript()
+        <?php
+        
+echo $this->headScript()
+            ->prependFile($this->basePath() . '/js/jquery.validate.min.js')
             ->prependFile($this->basePath() . '/js/bootstrap.min.js')
-            ->prependFile($this->basePath() . '/js/jquery-1.9.1.min.js')
-            ->prependFile($this->basePath() . '/js/jquery-migrate-1.1.1.min.js')
-            ->prependFile($this->basePath() . '/js/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
-            ->prependFile($this->basePath() . '/js/html5shiv.js',   'text/javascript', array('conditional' => 'lt IE 9',));
+            ->prependFile($this->basePath() . '/js/jquery-migrate.min.js')
+            ->prependFile($this->basePath() . '/js/jquery.min.js')
+            ->prependFile($this->basePath() . '/js/respond.min.js', 'text/javascript', array(
+            'conditional' => 'lt IE 9'
+        ))
+            ->prependFile($this->basePath() . '/js/html5shiv.js', 'text/javascript', array(
+            'conditional' => 'lt IE 9'
+        ));
         ?>
-
     </head>
-    <body class="loginbody">
+<body class="loginbody">
 
-<div class="loginwrapper">
-	<div class="loginwrap zindex100 animate2 bounceInDown">
-	<h1 class="logintitle"><span class="iconfa-lock"></span> Sign In <span class="subtitle">Hello! Sign in to get you started!</span></h1>
-        <div class="loginwrapperinner">
-            <form id="loginform" action="dashboard.html" method="post">
-                <p class="animate4 bounceIn"><input type="text" id="username" name="username" placeholder="Username" /></p>
-                <p class="animate5 bounceIn"><input type="password" id="password" name="password" placeholder="Password" /></p>
-                <p class="animate6 bounceIn"><button class="btn btn-default btn-block">Submit</button></p>
-                <p class="animate7 fadeIn"><a href=""><span class="icon-question-sign icon-white"></span> Forgot Password?</a></p>
-            </form>
-        </div><!--loginwrapperinner-->
-    </div>
-    <div class="loginshadow animate3 fadeInUp"></div>
-</div><!--loginwrapper-->
+	<div class="loginwrapper">
+<?php
 
-<script type="text/javascript">
-jQuery.noConflict();
-
-jQuery(document).ready(function(){
-	
-	var anievent = (jQuery.browser.webkit)? 'webkitAnimationEnd' : 'animationend';
-	jQuery('.loginwrap').bind(anievent,function(){
-		jQuery(this).removeClass('animate2 bounceInDown');
-	});
-	
-	jQuery('#username,#password').focus(function(){
-		if(jQuery(this).hasClass('error')) jQuery(this).removeClass('error');
-	});
-	
-	jQuery('#loginform button').click(function(){
-		if(!jQuery.browser.msie) {
-			if(jQuery('#username').val() == '' || jQuery('#password').val() == '') {
-				if(jQuery('#username').val() == '') jQuery('#username').addClass('error'); else jQuery('#username').removeClass('error');
-				if(jQuery('#password').val() == '') jQuery('#password').addClass('error'); else jQuery('#password').removeClass('error');
-				jQuery('.loginwrap').addClass('animate0 wobble').bind(anievent,function(){
-					jQuery(this).removeClass('animate0 wobble');
-				});
-			} else {
-				jQuery('.loginwrapper').addClass('animate0 fadeOutUp').bind(anievent,function(){
-					jQuery('#loginform').submit();
-				});
-			}
-			return false;
-		}
-	});
-});
-</script>
+$flash = $this->flashMessenger();
+if (isset($flash)) {
+    $flash->setMessageOpenFormat('<div%s>
+     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+         &times;
+     </button>')
+        ->setMessageSeparatorString('</li><li>')
+        ->setMessageCloseString('</li></ul></div>');
+    
+    echo $flash->render('error', array(
+        'alert',
+        'alert-error',
+        'alert-danger'
+    ));
+    echo $flash->render('info', array(
+        'alert',
+        'alert-dismissable',
+        'alert-info'
+    ));
+    echo $flash->render('default', array(
+        'alert',
+        'alert-dismissable',
+        'alert-warning'
+    ));
+    echo $flash->render('success', array(
+        'alert',
+        'alert-dismissable',
+        'alert-success'
+    ));
+}
+?>
+<?php echo $this->content; ?>
+</div>
+	<!--loginwrapper-->
 </body>
 </html>
-    

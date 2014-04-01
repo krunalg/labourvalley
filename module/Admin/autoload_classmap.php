@@ -4,4 +4,9 @@
     'Admin\Module'                        => __DIR__ . '/Module.php',
     'Admin\Controller\SkeletonController' => __DIR__ . '/src/Admin/Controller/IndexController.php'
 );*/
-return array();
+return array(
+    'Admin\Module' => __DIR__ . '/Module.php',
+    'Admin\Controller\AuthController' => __DIR__ . '/src/Admin/Controller/IndexController.php',
+    'Admin\Model\MyAuthStorage' => __DIR__ . '/src/Admin/Model/AuthStorage.php',
+    'Admin\Model\User' => __DIR__ . '/src/Admin/Model/User.php',
+);
