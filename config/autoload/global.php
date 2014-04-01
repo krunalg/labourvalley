@@ -10,7 +10,13 @@
  * control, so do not include passwords or other sensitive information in this
  * file.
  */
-
-return array(
-    // ...
+return array (
+    'service_manager' => array (
+        'factories' => array (
+            'Commons\Db\Adapter\WriteAdapter' => 'Commons\Db\Adapter\WriteAdapterServiceFactory',
+            'Commons\Db\Adapter\ReadAdapter' => 'Commons\Db\Adapter\ReadAdapterServiceFactory',
+            //'Zend\Db\Adapter\Adapter' => 'Commons\Db\Adapter\ReadAdapterServiceFactory'
+        )
+    )
 );
+

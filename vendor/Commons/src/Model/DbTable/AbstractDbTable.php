@@ -5,7 +5,7 @@ namespace Commons\Model\DbTable;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\Db\ResultSet\ResultSet;
-use MCommons\StaticOptions;
+use Commons\StaticOptions;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 abstract class AbstractDbTable implements ServiceLocatorAwareInterface {

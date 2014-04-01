@@ -5,17 +5,42 @@ return array(
             'Admin\Controller\Index' => 'Admin\Controller\IndexController'
         )
     ),
+    'controller_plugins' => array(
+        'invokables' => array(
+            'AuthenticationPlugin' => 'Admin\Controller\Plugin\AuthenticationPlugin'
+        )
+    ),
     'router' => array(
         'routes' => array(
-            'home' => array(
+            'login' => array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(
-                    'route'    => '/',
+                    'route' => '/',
                     'defaults' => array(
                         'controller' => 'Admin\Controller\Index',
-                        'action'     => 'index',
-                    ),
-                ),
+                        'action' => 'index'
+                    )
+                )
+            ),
+            'home' => array(
+                'type' => 'Literal',
+                'options' => array(
+                    'route' => '/home',
+                    'defaults' => array(
+                        'controller' => 'Admin\Controller\Index',
+                        'action' => 'home'
+                    )
+                )
+            ),
+            'logout' => array(
+                'type' => 'Literal',
+                'options' => array(
+                    'route' => '/logout',
+                    'defaults' => array(
+                        'controller' => 'Admin\Controller\Index',
+                        'action' => 'logout'
+                    )
+                )
             ),
             'admin' => array(
                 'type' => 'Literal',
@@ -52,12 +77,25 @@ return array(
         )
     ),
     'view_manager' => array(
-        'template_path_stack' => array(
-            'admin' => __DIR__ . '/../view'
-        ),
+        'display_not_found_reason' => true,
+        'display_exceptions'       => true,
+        'doctype'                  => 'HTML5',
+        'not_found_template'       => 'error/404',
+        'exception_template'       => 'error/index',
         'template_map' => array(
-            'layout/login' => __DIR__ . '/../view/layout/login.phtml',
-            'layout/main' => __DIR__ . '/../view/layout/main.phtml'
+            'layout/layout'           => __DIR__ . '/../view/layout/login.phtml',
+            'layout/layout'           => __DIR__ . '/../view/layout/main.phtml',
+            'admin/index/index' => __DIR__ . '/../view/admin/index/index.phtml',
+            'error/404'               => __DIR__ . '/../view/error/404.phtml',
+            'error/index'             => __DIR__ . '/../view/error/index.phtml',
+        ),
+        'template_path_stack' => array(
+            __DIR__ . '/../view',
+        )
+    ),
+    'view_helpers' => array(
+        'invokables' => array(
+            'identitty' => 'Authentication\View\Helper\Identity'
         )
     )
 );

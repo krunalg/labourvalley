@@ -92,7 +92,7 @@ h4 { font-size: 16px; line-height: 26px; }
 .plainwidget { margin: 10px; background: #fcfcfc; border: 1px solid #bbb; padding: 5px 10px; }
 .plainwidget .progress { margin: 5px 0; height: 10px; }
 
-.leftmenu { margin: 10px 0; }
+.leftmenu { margin: 0; }/*10px 0*/
 .leftmenu .nav-tabs li { border-bottom: 1px solid #bbb; margin: 0 1px 0 0; }
 .leftmenu .nav-tabs li:first-child { border-top: 1px solid #bbb; }
 .leftmenu .nav-tabs li a { border: 0; color: #666; text-shadow: 1px 1px rgba(255,255,255,0.3); }

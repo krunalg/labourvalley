@@ -2,7 +2,7 @@
 
 namespace Commons\Model;
 
-use MCommons\Model\DbTable\AbstractDbTable;
+use Commons\Model\DbTable\AbstractDbTable;
 use Zend\Db\Sql\Select;
 
 abstract class AbstractModel {

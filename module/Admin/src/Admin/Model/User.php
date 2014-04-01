@@ -25,11 +25,13 @@ class User extends AbstractModel implements InputFilterAwareInterface
 
     public $status;
 
+    public $is_super_user;
+
     protected $inputFilter;
 
     protected $_db_table_name = 'Admin\Model\DbTable\UserTable';
 
-    protected $_primary_key = 'id';
+    protected $_primary_key = 'user_id';
 
     /**
      * Encode password into md5
@@ -44,19 +46,6 @@ class User extends AbstractModel implements InputFilterAwareInterface
     public function setInputFilter(InputFilterInterface $inputFilter)
     {
         throw new \Exception("Not used");
-    }
-
-    /**
-     * maps user data
-     *
-     * @param array $data            
-     */
-    function exchangeArray($data)
-    {
-        $this->lastname = (isset($data['lastname'])) ? $data['lastname'] : null;
-        if (isset($data["password"])) {
-            $this->setPassword($data["password"]);
-        }
     }
 
     public function getInputFilter()
@@ -116,9 +105,8 @@ class User extends AbstractModel implements InputFilterAwareInterface
         return $this->inputFilter;
     }
 
-
-    public function getUser($username)
+    public function getArrayCopy()
     {
-        //fetch user
+        return get_object_vars($this);
     }
 }
