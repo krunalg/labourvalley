@@ -28,7 +28,6 @@ class AuthenticationPlugin extends AbstractPlugin
         $routeMatch = $event->getRouteMatch();
         $controller = $routeMatch->getParam('controller');
         $action     = $routeMatch->getParam('action');
-
         // prevent infinite loops
         if ($controller == 'Admin\Controller\Index' && $action == 'index') {
             return;
