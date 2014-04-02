@@ -52,7 +52,7 @@ class Module extends \Commons\Module implements AutoloaderProviderInterface
         $eventManager->attach('dispatch', array(
             $this,
             'loadConfiguration'
-        ), 2);
+        ), 999);
     }
 
     public function getServiceConfig()
@@ -85,12 +85,12 @@ class Module extends \Commons\Module implements AutoloaderProviderInterface
             $sm = $application->getServiceManager();
             $sharedManager = $application->getEventManager()->getSharedManager();
             
-            $sharedManager->attach('Zend\Mvc\Controller\AbstractActionController', 'dispatch', function ($e) use($sm)
+            $sharedManager->attach('Zend\Mvc\Controller\AbstractActionController', MvcEvent::EVENT_DISPATCH, function ($e) use($sm)
             {
                 $sm->get('ControllerPluginManager')
                     ->get('AuthenticationPlugin')
                     ->doAuthorization($e);
-            },996);
+            },998);
         } catch (\Exception $ex) {
             echo $ex->getMessage();
         }

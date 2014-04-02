@@ -55,8 +55,8 @@ return array(
                         'action' => 'index'
                     )
                 ),
-                'may_terminate' => true,
-                'child_routes' => array(
+                /*'may_terminate' => true,
+                /*'child_routes' => array(
                     // This route is a sane default when developing a module;
                     // as you solidify the routes for your module, however,
                     // you may want to remove it and replace it with more
@@ -72,25 +72,25 @@ return array(
                             'defaults' => array()
                         )
                     )
-                )
+                )*/
             )
         )
     ),
     'view_manager' => array(
         'display_not_found_reason' => true,
-        'display_exceptions'       => true,
-        'doctype'                  => 'HTML5',
-        'not_found_template'       => 'error/404',
-        'exception_template'       => 'error/index',
+        'display_exceptions' => true,
+        'doctype' => 'HTML5',
+        'not_found_template' => 'error/404',
+        'exception_template' => 'error/index',
         'template_map' => array(
-            'layout/layout'           => __DIR__ . '/../view/layout/login.phtml',
-            'layout/layout'           => __DIR__ . '/../view/layout/main.phtml',
-            'admin/index/index' => __DIR__ . '/../view/admin/index/index.phtml',
-            'error/404'               => __DIR__ . '/../view/error/404.phtml',
-            'error/index'             => __DIR__ . '/../view/error/index.phtml',
+            'layout/layout'=> __DIR__ .'/../view/layout/layout.phtml',
+            'layout/login' => __DIR__ . '/../view/layout/login.phtml',
+            'layout/main' => __DIR__ . '/../view/layout/main.phtml',
+            'error/404' => __DIR__ . '/../view/error/404.phtml',
+            'error/index' => __DIR__ . '/../view/error/index.phtml'
         ),
         'template_path_stack' => array(
-            __DIR__ . '/../view',
+            __DIR__ . '/../view'
         )
     ),
     'view_helpers' => array(
