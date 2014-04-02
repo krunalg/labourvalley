@@ -6,14 +6,14 @@
 
         <?php
         
-echo $this->headMeta()
+        echo $this->headMeta()
             ->appendName('viewport', 'width=device-width, initial-scale=1.0')
             ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')?>
 
         <!-- Le styles -->
         <?php
         
-echo $this->headLink(array(
+        echo $this->headLink(array(
             'rel' => 'shortcut icon',
             'type' => 'image/vnd.microsoft.icon',
             'href' => $this->basePath() . '/img/favicon.ico'
@@ -27,14 +27,18 @@ echo $this->headLink(array(
         <!-- Scripts -->
         <?php
         
-echo $this->headScript()
+        echo $this->headScript()
             ->prependFile($this->basePath() . 'js/custom.js')
             ->prependFile($this->basePath() . 'js/jquery.cookie.js')
             ->prependFile($this->basePath() . 'js/jquery.flot.resize.min.js')
             ->prependFile($this->basePath() . 'js/jquery.flot.min.js')
             ->prependFile($this->basePath() . 'js/jquery-ui-1.9.2.min.js')
-            ->prependFile($this->basePath() . '/js/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9'))
-            ->prependFile($this->basePath() . '/js/html5shiv.js', 'text/javascript', array('conditional' => 'lt IE 9'))
+            ->prependFile($this->basePath() . '/js/respond.min.js', 'text/javascript', array(
+            'conditional' => 'lt IE 9'
+        ))
+            ->prependFile($this->basePath() . '/js/html5shiv.js', 'text/javascript', array(
+            'conditional' => 'lt IE 9'
+        ))
             ->prependFile($this->basePath() . '/js/jquery.validate.min.js')
             ->prependFile($this->basePath() . '/js/bootstrap.min.js')
             ->prependFile($this->basePath() . '/js/jquery-migrate.min.js')
@@ -59,16 +63,15 @@ echo $this->headScript()
 			<div class="leftmenu">
 				<ul class="nav nav-tabs nav-stacked">
 					<li class="nav-header">Main Navigation</li>
-					<li class="active"><a href="/home"><span
-							class="icon-home"></span> Dashboard</a></li>
+					<li class="active"><a href="/home"><span class="icon-home"></span>
+							Dashboard</a></li>
 					<li class="dropdown"><a href=""><span class="icon-wrench"></span>Manage</a>
 						<ul>
 							<li><a href="javascript:void(0);">States</a></li>
 							<li><a href="javascript:void(0);">Cities</a></li>
 							<li><a href="javascript:void(0);">Areas</a></li>
 							<li><a href="javascript:void(0);">Restaurants</a></li>
-						</ul>
-					</li>
+						</ul></li>
 				</ul>
 			</div>
 			<!--leftmenu-->
@@ -109,8 +112,7 @@ echo $this->headScript()
 						<a class="dropdown-toggle" data-toggle="dropdown" data-target="#"
 							href="/home">Hi, Edwin! <b class="caret"></b></a>
 						<ul class="dropdown-menu">
-							<li><a href="/home"><span class="icon-edit"></span>
-									Edit Profile</a></li>
+							<li><a href="/home"><span class="icon-edit"></span> Edit Profile</a></li>
 							<li><a href=""><span class="icon-wrench"></span> Account Settings</a></li>
 							<li class="divider"></li>
 							<li><a href="/logout"><span class="icon-off"></span> Sign Out</a></li>
@@ -148,11 +150,39 @@ echo $this->headScript()
 
 			<div class="maincontent">
 				<div class="contentinner content-dashboard">
-					<div class="alert alert-info">
-						<button type="button" class="close" data-dismiss="alert">×</button>
-						<strong>Welcome!</strong> This alert needs your attention, but
-						it's not super important.
-					</div>
+					<?php
+    
+                        $flash = $this->flashMessenger();
+                        if (isset($flash)) {
+                            $flash->setMessageOpenFormat('<div%s>
+                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                             &times;
+                         </button>')
+                                ->setMessageSeparatorString('</li><li>')
+                                ->setMessageCloseString('</li></ul></div>');
+                            
+                            echo $flash->render('error', array(
+                                'alert',
+                                'alert-error',
+                                'alert-danger'
+                            ));
+                            echo $flash->render('info', array(
+                                'alert',
+                                'alert-dismissable',
+                                'alert-info'
+                            ));
+                            echo $flash->render('default', array(
+                                'alert',
+                                'alert-dismissable',
+                                'alert-warning'
+                            ));
+                            echo $flash->render('success', array(
+                                'alert',
+                                'alert-dismissable',
+                                'alert-success'
+                            ));
+                        }
+                        ?>
 					<!--alert-->
 
 					<div class="row-fluid">
