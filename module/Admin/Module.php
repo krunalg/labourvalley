@@ -52,8 +52,7 @@ class Module extends \Commons\Module implements AutoloaderProviderInterface
         $eventManager->attach('dispatch', array(
             $this,
             'loadConfiguration'
-        )
-        , 2);
+        ), 2);
     }
 
     public function getServiceConfig()
@@ -91,7 +90,7 @@ class Module extends \Commons\Module implements AutoloaderProviderInterface
                 $sm->get('ControllerPluginManager')
                     ->get('AuthenticationPlugin')
                     ->doAuthorization($e);
-            });
+            },996);
         } catch (\Exception $ex) {
             echo $ex->getMessage();
         }
