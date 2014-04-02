@@ -44,15 +44,14 @@ class IndexController extends AbstractController
                     if ($result->isValid()) {
                         $storage = $service->getStorage();
                         $storage->write($adapter->getResultRowObject(null, 'password'));
-                        
+                        $this->flashMessenger()->addSuccessMessage('Welcome!');
                         return $this->redirect()->toRoute('home');
                     } else {
+                        $this->flashMessenger()->addErrorMessage('Username or password is wrong!');
                         $this->redirect()->toRoute('login');
                     }
-                    return array(
-                        'form' => $loginForm,
-                        'error_message' => array_pop($result->getMessages())
-                    );
+                }else{
+                    $this->redirect()->toRoute('login');
                 }
             } catch (\Exception $ex) {
                 echo $ex->getMessage();
