@@ -63,6 +63,7 @@ class IndexController extends AbstractController
 
     public function homeAction()
     {
+        $layout = $this->layout('layout/main');
         $username = $this->getAuthService()
             ->getStorage()
             ->read();
@@ -74,6 +75,9 @@ class IndexController extends AbstractController
 
     public function logoutAction()
     {
+        $sm = $this->getServiceLocator();
+        $service = $sm->get('AuthService');
+        $service->clearIdentity();
         return $this->redirect()->toRoute('login');
     }
 }

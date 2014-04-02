@@ -32,7 +32,6 @@ class AuthenticationPlugin extends AbstractPlugin
         if ($controller == 'Admin\Controller\Index' && $action == 'index') {
             return;
         }
-
         $service = $this->getAuthenticationService();
 
         if (!$service->hasIdentity()) {
