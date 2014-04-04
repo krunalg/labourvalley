@@ -6,7 +6,13 @@ use Zend\Mvc\Controller\AbstractActionController as ActionController;
 class AbstractController extends ActionController
 {
 
-    public function setTitle($headTitle = null)
+    /**
+     * set title and page details for each action
+     *
+     * @param array $headTitle            
+     * @param array $pageDetails            
+     */
+    public function setTitle($headTitle = null, $pageDetails = "")
     {
         $viewHelper = $this->getServiceLocator()->get('viewHelperManager');
         $headTitleHelper = $viewHelper->get('headTitle');
@@ -15,8 +21,17 @@ class AbstractController extends ActionController
                 foreach ($headTitle as $title) {
                     $headTitleHelper->append($title);
                 }
-            }else if(is_string($headTitle)){
-                $headTitleHelper->append($headTitle);
+            } else 
+                if (is_string($headTitle)) {
+                    $headTitleHelper->append($headTitle);
+                }
+        }
+        if (! empty($pageDetails)) {
+            if (isset($pageDetails[0])) {
+                $this->layout()->setVariable('pageTitle', $pageDetails[0]);
+            }
+            if (isset($pageDetails[1])) {
+                $this->layout()->setVariable('pageDescr', $pageDetails[1]);
             }
         }
     }
