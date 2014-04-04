@@ -50,7 +50,7 @@ class IndexController extends AbstractController
                         $this->flashMessenger()->addErrorMessage('Username or password is wrong!');
                         $this->redirect()->toRoute('login');
                     }
-                }else{
+                } else {
                     $this->redirect()->toRoute('login');
                 }
             } catch (\Exception $ex) {
@@ -63,12 +63,10 @@ class IndexController extends AbstractController
     public function homeAction()
     {
         $layout = $this->layout('layout/main');
-        $username = $this->getAuthService()
-            ->getStorage()
-            ->read();
-        $viewModel = new ViewModel(array(
-            'name' => $username
-        ));
+        $viewModel = new ViewModel();
+        $this->setTitle(array(
+            "Dashboard"
+        ), array("Dashboard","Test description..."));
         return $viewModel;
     }
 

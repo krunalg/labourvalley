@@ -43,39 +43,7 @@ echo $this->headScript()
 <body class="loginbody">
 
 	<div class="loginwrapper">
-<?php
-
-$flash = $this->flashMessenger();
-if (isset($flash)) {
-    $flash->setMessageOpenFormat('<div%s>
-     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
-         &times;
-     </button>')
-        ->setMessageSeparatorString('</li><li>')
-        ->setMessageCloseString('</li></ul></div>');
-    
-    echo $flash->render('error', array(
-        'alert',
-        'alert-error',
-        'alert-danger'
-    ));
-    echo $flash->render('info', array(
-        'alert',
-        'alert-dismissable',
-        'alert-info'
-    ));
-    echo $flash->render('default', array(
-        'alert',
-        'alert-dismissable',
-        'alert-warning'
-    ));
-    echo $flash->render('success', array(
-        'alert',
-        'alert-dismissable',
-        'alert-success'
-    ));
-}
-?>
+<?php echo $this->partial('layout/message'); ?>
 <?php echo $this->content; ?>
 </div>
 	<!--loginwrapper-->

@@ -20,7 +20,7 @@ class LoginForm extends Form
             'name' => 'username',
             'attributes' => array(
                 'type' => 'text',
-                'class' => 'Username',
+                'class' => 'username',
                 'required' => 'required',
                 'id' => 'username',
                 'placeholder' => 'Username'
