@@ -53,6 +53,17 @@ return array(
                         'action' => 'add'
                     )
                 )
+            ),
+            'state-delete' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/state/delete[/:id]',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Admin\Controller',
+                        'controller' => 'States',
+                        'action' => 'delete'
+                    )
+                )
             )
         )
     ),
