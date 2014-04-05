@@ -12,8 +12,11 @@
     echo $this->form()->openTag($form);
     ?>
             <?php
-            echo $this->formElement($form->get('state'));
-            echo $this->formElementErrors($form->get('state'));
+                echo $this->formElement($form->get('id'));
+            ?>
+            <?php
+                echo $this->formElement($form->get('state'));
+                echo $this->formElementErrors($form->get('state'));
             ?>
             <p>
 				<?php echo $this->formElement($form->get('submit')); ?>
@@ -34,7 +37,7 @@
 				<tr>
 					<td><?php echo $state['state']; ?></td>
 					<td>
-					   <a href="javascript:void(0);" class="btn btn-info edit-item"><i class="iconfa-pencil"></i></a>
+					   <a href="javascript:void(0);" id="edit-<?php echo $state['id']; ?>" class="btn btn-info edit-item"><i class="iconfa-pencil"></i></a>
 					   <a href="/state/delete/<?php echo $state['id']; ?>" class="btn btn-danger delete-item"><i class="icon-trash icon-white"></i></a>
 					</td>
 				</tr>

@@ -6,6 +6,7 @@ use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 use Commons\Model\AbstractModel;
 use Zend\Db\Sql\Select;
+use Zend\Db\Sql\Delete;
 
 class State extends AbstractModel implements InputFilterAwareInterface
 {
@@ -37,20 +38,8 @@ class State extends AbstractModel implements InputFilterAwareInterface
     {
         $data = $this->toArray();
         $writeGateway = $this->getDbTable()->getWriteGateway();
-        $select = new Select ();
-        $select->from ( $this->getDbTable ()->getTableName () );
-        $select->columns ( array () );
-        
-        $select->columns ( array (
-            'count'=>new \Zend\Db\Sql\Expression('COUNT(*)')
-        ) );
-        
-        $select->where ( array (
-            'search_status' => 1
-        ) );
-        $count = $this->getDbTable ()->setArrayObjectPrototype ( 'ArrayObject' )->getReadGateway ()->selectWith ( $select );
         try {
-            if (! isset($data['id']) && $data['id'] == "") {
+            if (isset($data['id']) && $data['id'] == "") {
                 $data['created'] = date("Y-m-d h:i:s");
                 $rowsAffected = $writeGateway->insert($data);
             } else {
@@ -81,13 +70,15 @@ class State extends AbstractModel implements InputFilterAwareInterface
 
     public function deleteState($id)
     {
+        $delete = new Delete ();
         $status = false;
         try {
-            $data['status'] = 0;
-            $writeGateway = $this->getDbTable()->getWriteGateway();
-            $rowsAffected = $writeGateway->update($data, array(
-                'id' => $id
-            ));
+            $delete->from ( $this->getDbTable ()->getTableName () );
+            $where = new \Zend\Db\Sql\Where ();
+            $where->equalTo('id', $id);
+            $delete->where ( $where );
+            $writeGateway = $this->getDbTable ()->getWriteGateway ();
+            $rowsAffected = $writeGateway->delete ( $where );
             if ($rowsAffected > 0) {
                 $status = true;
             }
@@ -135,7 +126,17 @@ class State extends AbstractModel implements InputFilterAwareInterface
         }
         return $this->inputFilter;
     }
-
+    public function fetchState($id){
+    	try{
+    	    $row = $this->find(array(
+    	    	'columns'=>array('id','state'),
+    	        'where'=>array('id'=>$id,'status'=>1)
+    	    ))->current();
+    	    return $row->toArray();
+    	}catch(\Exception $ex){
+    	    return array('status'=>'failed','data'=>$ex->getMessage());
+    	}
+    }
     public function getArrayCopy()
     {
         return get_object_vars($this);

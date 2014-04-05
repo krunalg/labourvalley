@@ -16,6 +16,15 @@ class StateForm extends Form
             'id' => 'state-form'
         ));
         $this->add(array(
+            'name' => 'id',
+            'attributes' => array(
+                'type' => 'hidden'
+            ),
+            'options' => array(
+                'label' => 'Id'
+            )
+        ));
+        $this->add(array(
             'name' => 'state',
             'attributes' => array(
                 'type' => 'text',

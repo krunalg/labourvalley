@@ -69,4 +69,19 @@ class StatesController extends AbstractController
         }
         $this->redirect()->toRoute('state-add');
     }
+
+    public function fetchAction()
+    {
+        $request = $this->getRequest();
+        $id = $this->params('id');
+        $viewModel = new ViewModel();
+        $viewModel->setTerminal(true);
+        $state = new State();
+        $isAjax = $request->isXmlHttpRequest();
+        if ($isAjax) {
+            $result = $state->fetchState($id);
+            echo json_encode($result);
+        }
+        exit();
+    }
 }

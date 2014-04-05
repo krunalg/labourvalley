@@ -64,6 +64,17 @@ return array(
                         'action' => 'delete'
                     )
                 )
+            ),
+            'state-get' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/state/get[/:id]',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Admin\Controller',
+                        'controller' => 'States',
+                        'action' => 'fetch'
+                    )
+                )
             )
         )
     ),
