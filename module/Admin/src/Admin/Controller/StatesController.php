@@ -20,9 +20,7 @@ class StatesController extends AbstractController
     {
         $layout = $this->layout('layout/main');
         $stateForm = new StateForm();
-        $view = new ViewModel(array(
-            'stateForm' => $stateForm
-        ));
+        $state = new State();
         $this->setTitle(array(
             "Manage States"
         ), array(
@@ -30,21 +28,60 @@ class StatesController extends AbstractController
             "Add, Edit, Delete States"
         ));
         $request = $this->getRequest();
-        try {
-            if ($request->isPost()) {
-                $state = new State();
-                $stateForm->setInputFilter($state->getInputFilter());
-                $stateForm->setData($request->getPost());
-                if ($stateForm->isValid()) {
-                    $data = $stateForm->getData();
-                    $state->name = $data['state'];
-                    $state->created = date("Y-m-d");
-                    $state->modified = date("Y-m-d");
+        $stateList = $state->fetchStates()->toArray();
+        if ($request->isPost()) {
+            $stateForm->setInputFilter($state->getInputFilter());
+            $stateForm->setData($request->getPost());
+            if ($stateForm->isValid()) {
+                $data = $stateForm->getData();
+                $state->exchangeArray($data);
+                try {
+                    $status = $state->save($state->toArray());
+                } catch (\Exception $ex) {
+                    echo $ex->getMessage();
                 }
+                if ($status) {
+                    $this->flashMessenger()->addSuccessMessage('State has been added successfully');
+                } else {
+                    $this->flashMessenger()->addErrorMessage('State already exists');
+                }
+                $this->redirect()->toRoute('state-add');
+            } else {
+                // print_r($stateForm->getMessages());
             }
-        } catch (\Exception $ex) {
-            echo $ex->getMessage();
         }
+        $view = new ViewModel(array(
+            'stateForm' => $stateForm,
+            'states' => $stateList
+        ));
         return $view;
+    }
+
+    public function deleteAction()
+    {
+        $id = $this->params('id');
+        $state = new State();
+        $status = $state->deleteState($id);
+        if ($status) {
+            $this->flashMessenger()->addSuccessMessage('State has been deleted successfully');
+        } else {
+            $this->flashMessenger()->addErrorMessage('Failed! State has not been deleted');
+        }
+        $this->redirect()->toRoute('state-add');
+    }
+
+    public function fetchAction()
+    {
+        $request = $this->getRequest();
+        $id = $this->params('id');
+        $viewModel = new ViewModel();
+        $viewModel->setTerminal(true);
+        $state = new State();
+        $isAjax = $request->isXmlHttpRequest();
+        if ($isAjax) {
+            $result = $state->fetchState($id);
+            echo json_encode($result);
+        }
+        exit();
     }
 }

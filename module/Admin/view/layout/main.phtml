@@ -27,7 +27,8 @@
         
         echo $this->headScript()
             ->prependFile($this->basePath() . '/js/custom.js')
-            ->prependFile($this->basepath().'/js/jquery.dataTables.min.js')
+            ->prependFile($this->basePath() . '/js/bootbox.min.js')
+            ->prependFile($this->basePath().'/js/jquery.dataTables.min.js')
             ->prependFile($this->basePath() . '/js/jquery.cookie.js')
             ->prependFile($this->basePath() . '/js/jquery.flot.resize.min.js')
             ->prependFile($this->basePath() . '/js/jquery.flot.min.js')

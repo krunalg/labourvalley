@@ -195,7 +195,7 @@ jQuery(document).ready(function(){
 	
 	
 	// dynamic table
-	if(jQuery('#dyntable').length > 0) {
+	/*if(jQuery('#dyntable').length > 0) {
 		jQuery('#dyntable').dataTable({
 			"sPaginationType": "full_numbers",
 			"aaSortingFixed": [[0,'asc']],
@@ -203,7 +203,7 @@ jQuery(document).ready(function(){
 				jQuery.uniform.update();
 			}
 		});
-	}
+	}*/
 	
 	
 	/////////////////////////////// ELEMENTS.HTML //////////////////////////////
@@ -421,4 +421,60 @@ jQuery(document).ready(function(){
 		}
 	}
 	
+	jQuery(document).on("click","a.delete-item",function(e){
+		var that = jQuery(this);
+		e.preventDefault();
+		e.stopImmediatePropagation();
+		bootbox.confirm("Are you sure?", function(result) {
+			if(result){
+				window.location = that.attr("href");
+			}
+		});
+	});
+	jQuery(document).on("click",".edit-item",function(e){
+		var that = jQuery(this);
+		e.preventDefault();
+		e.stopImmediatePropagation();
+		var url = "/state/get/"+getId(jQuery(this));
+		ajaxCall(url,focusOnState);
+	});
+	if(jQuery("div.alert").length){
+		setTimeout(function(){
+			jQuery("div.alert").fadeOut(500);
+		},10000);
+	}
+	
 });
+var ajaxCall = function(url,fun){
+	jQuery.ajax({
+		url:url,
+		type:"GET",
+		dataType:"json",
+		success:function(data){
+			try{
+				if(data){
+					fun(data);
+				}
+			}catch(e){
+				console.log(e);
+			}
+		}
+	});
+}
+var getId = function(element){
+	var idStr = element.attr("id");
+	var idArr = idStr.split("-");
+	return idArr[1];
+}
+var focusOnState = function(data){
+	jQuery('#state').focus();
+	jQuery('html, body').animate({ scrollTop: jQuery(".widgettitle").offset().top }, 500);
+	jQuery.each(data,function(key,val){
+		if(key=='id'){
+			jQuery("input[name=id]").val(jQuery.trim(val));
+		}
+		if(key=='state'){
+			jQuery('#state').val(jQuery.trim(val));
+		}
+	});
+}

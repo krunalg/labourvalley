@@ -40,7 +40,7 @@ abstract class AbstractModel {
 	 * Exchange the data with model variables
 	 *
 	 * @param array $data        	
-	 * @return \MCommons\Model\AbstractModel
+	 * @return \Commons\Model\AbstractModel
 	 */
 	public function exchangeArray(array $data) {
 		foreach ( $data as $key => $value ) {

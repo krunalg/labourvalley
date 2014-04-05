@@ -1,12 +1,18 @@
 <div class="span">
 	<h4 class="widgettitle nomargin shadowed">States</h4>
 	<div class="widgetcontent bordered shadowed">
-		  <?php 
-                $form = $this->stateForm;
-                $form->prepare();
-                $form->setAttribute('action', $this->url(NULL,array('controller'=>'States', 'action' => 'add')));
-                $form->setAttribute('method', 'post');
-                echo $this->form()->openTag($form);
+		  <?php
+    $form = $this->stateForm;
+    $form->prepare();
+    $form->setAttribute('action', $this->url(NULL, array(
+        'controller' => 'States',
+        'action' => 'add'
+    )));
+    $form->setAttribute('method', 'post');
+    echo $this->form()->openTag($form);
+    ?>
+            <?php
+                echo $this->formElement($form->get('id'));
             ?>
             <?php
                 echo $this->formElement($form->get('state'));
@@ -15,49 +21,34 @@
             <p>
 				<?php echo $this->formElement($form->get('submit')); ?>
 			</p>
-			<hr/>    
-            	<table class="table table-bordered" id="dyntable">
-                    <thead>
-                        <tr>
-                            <th class="head0">Rendering engine</th>
-                            <th class="head1">Browser</th>
-                            <th class="head0">Platform(s)</th>
-                            <th class="head1">Engine version</th>
-                            <th class="head0">CSS grade</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="gradeX">
-                            <td>Trident</td>
-                            <td>Internet Explorer 4.0</td>
-                            <td>Win 95+</td>
-                            <td class="center">4</td>
-                            <td class="center">X</td>
-                        </tr>
-                        <tr class="gradeC">
-                            <td>Trident</td>
-                            <td>Internet Explorer 5.0</td>
-                            <td>Win 95+</td>
-                            <td class="center">5</td>
-                            <td class="center">C</td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td>Trident</td>
-                            <td>Internet Explorer 5.5</td>
-                            <td>Win 95+</td>
-                            <td class="center">5.5</td>
-                            <td class="center">A</td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td>Trident</td>
-                            <td>Internet Explorer 6</td>
-                            <td>Win 98+</td>
-                            <td class="center">6</td>
-                            <td class="center">A</td>
-                        </tr>
-                    </tbody>
-                </table>
-			
+		<hr />
+		<table class="table table-bordered" id="dyntable">
+			<thead>
+				<tr>
+					<th class="head0" width="40%">State</th>
+					<th class="head1" width="50%">Action</th>
+				</tr>
+			</thead>
+			<tbody>
+			<?php
+			     if(isset($this->states) && !empty($this->states)){ 
+                 foreach($this->states as $state){
+			?>
+				<tr>
+					<td><?php echo $state['state']; ?></td>
+					<td>
+					   <a href="javascript:void(0);" id="edit-<?php echo $state['id']; ?>" class="btn btn-info edit-item"><i class="iconfa-pencil"></i></a>
+					   <a href="/state/delete/<?php echo $state['id']; ?>" class="btn btn-danger delete-item"><i class="icon-trash icon-white"></i></a>
+					</td>
+				</tr>
+			<?php }}else{ ?>
+			     <tr>
+			         <td colspan="2">No states found</td>
+			     </tr>
+			<?php } ?>	
+			</tbody>
+		</table>
+
 	</div>
 	<!--widgetcontent-->
 </div>
