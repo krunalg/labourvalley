@@ -10,53 +10,53 @@ namespace Admin\Controller;
 
 use Commons\Controller\AbstractController;
 use Zend\View\Model\ViewModel;
-use Admin\Form\StateForm;
-use Admin\Model\State;
+use Admin\Form\CityForm;
+use Admin\Model\City;
 
-class StatesController extends AbstractController
+class CitiesController extends AbstractController
 {
 
     public function addAction()
     {
         $layout = $this->layout('layout/main');
-        $stateForm = new StateForm();
-        $state = new State();
+        $cityForm = new CityForm();
+        $city = new City();
         $this->setTitle(array(
-            "Manage States"
+            "Manage Cities"
         ), array(
-            "Manage States",
-            "Add, Edit, Delete States"
+            "Manage Cities",
+            "Add, Edit, Delete Cities"
         ));
         $request = $this->getRequest();
-        $stateList = $state->fetchStates()->toArray();
+        $cityList = $city->fetchCities()->toArray();
         if ($request->isPost()) {
-            $stateForm->setInputFilter($state->getInputFilter());
-            $stateForm->setData($request->getPost());
-            if ($stateForm->isValid()) {
-                $data = $stateForm->getData();
-                $state->exchangeArray($data);
+            $cityForm->setInputFilter($city->getInputFilter());
+            $cityForm->setData($request->getPost());
+            if ($cityForm->isValid()) {
+                $data = $cityForm->getData();
+                $city->exchangeArray($data);
                 try {
-                    $status = $state->save($state->toArray());
+                    $status = $city->save($city->toArray());
                 } catch (\Exception $ex) {
                     echo $ex->getMessage();
                 }
                 if ($status) {
                     if(isset($data['id']) && $data['id']!=""){
-                        $this->flashMessenger()->addSuccessMessage('State has been updated successfully');
+                        $this->flashMessenger()->addSuccessMessage('City has been updated successfully');
                     }else{
-                        $this->flashMessenger()->addSuccessMessage('State has been added successfully');
+                        $this->flashMessenger()->addSuccessMessage('City has been added successfully');
                     }
                 } else {
-                    $this->flashMessenger()->addErrorMessage('State already exists');
+                    $this->flashMessenger()->addErrorMessage('City already exists');
                 }
-                $this->redirect()->toRoute('state-add');
+                $this->redirect()->toRoute('city-add');
             } else {
                 // print_r($stateForm->getMessages());
             }
         }
         $view = new ViewModel(array(
-            'stateForm' => $stateForm,
-            'states' => $stateList
+            'cityForm' => $cityForm,
+            'cities' => $cityList
         ));
         return $view;
     }
@@ -64,14 +64,14 @@ class StatesController extends AbstractController
     public function deleteAction()
     {
         $id = $this->params('id');
-        $state = new State();
-        $status = $state->deleteState($id);
+        $city = new City();
+        $status = $city->deleteCity($id);
         if ($status) {
-            $this->flashMessenger()->addSuccessMessage('State has been deleted successfully');
+            $this->flashMessenger()->addSuccessMessage('City has been deleted successfully');
         } else {
-            $this->flashMessenger()->addErrorMessage('Failed! State has not been deleted');
+            $this->flashMessenger()->addErrorMessage('Failed! City has not been deleted');
         }
-        $this->redirect()->toRoute('state-add');
+        $this->redirect()->toRoute('city-add');
     }
 
     public function fetchAction()
@@ -80,10 +80,10 @@ class StatesController extends AbstractController
         $id = $this->params('id');
         $viewModel = new ViewModel();
         $viewModel->setTerminal(true);
-        $state = new State();
+        $city = new City();
         $isAjax = $request->isXmlHttpRequest();
         if ($isAjax) {
-            $result = $state->fetchState($id);
+            $result = $city->fetchCity($id);
             echo json_encode($result);
         }
         exit();

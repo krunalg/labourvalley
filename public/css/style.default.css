@@ -1616,3 +1616,22 @@ label.error{
 	color:#ff0000!important;
 	text-shadow:0 -1px rgba(0, 0, 0, 0.2);
 }
+.dataTables_length{
+	display:none;
+}
+table.dataTable th{
+	background: linear-gradient(to bottom, #EDEDED 0%, #DEDEDE 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
+}
+div.dyn-table input{
+	margin:3px 0  3px 0;
+}
+div.dyn-table{
+	width:40%;
+}
+form ul li{
+	list-style: none;
+	color:red;
+}
+.display-block{
+	display:block;
+}

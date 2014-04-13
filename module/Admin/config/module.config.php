@@ -3,7 +3,8 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Admin\Controller\Index' => 'Admin\Controller\IndexController',
-            'Admin\Controller\States' => 'Admin\Controller\StatesController'
+            'Admin\Controller\States' => 'Admin\Controller\StatesController',
+            'Admin\Controller\Cities' => 'Admin\Controller\CitiesController'
         )
     ),
     'controller_plugins' => array(
@@ -75,7 +76,40 @@ return array(
                         'action' => 'fetch'
                     )
                 )
-            )
+            ),
+            'city-add' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/manage/cities',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Admin\Controller',
+                        'controller' => 'Cities',
+                        'action' => 'add'
+                    )
+                )
+            ),
+            'city-delete' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/city/delete[/:id]',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Admin\Controller',
+                        'controller' => 'Cities',
+                        'action' => 'delete'
+                    )
+                )
+            ),
+            'city-get' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/city/get[/:id]',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Admin\Controller',
+                        'controller' => 'Cities',
+                        'action' => 'fetch'
+                    )
+                )
+            ),
         )
     ),
     'view_manager' => array(
