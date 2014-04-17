@@ -4,7 +4,8 @@ return array(
         'invokables' => array(
             'Admin\Controller\Index' => 'Admin\Controller\IndexController',
             'Admin\Controller\States' => 'Admin\Controller\StatesController',
-            'Admin\Controller\Cities' => 'Admin\Controller\CitiesController'
+            'Admin\Controller\Cities' => 'Admin\Controller\CitiesController',
+            'Admin\Controller\Areas' => 'Admin\Controller\AreasController'
         )
     ),
     'controller_plugins' => array(
@@ -106,6 +107,39 @@ return array(
                     'defaults' => array(
                         '__NAMESPACE__' => 'Admin\Controller',
                         'controller' => 'Cities',
+                        'action' => 'fetch'
+                    )
+                )
+            ),
+            'area-add' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/manage/areas',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Admin\Controller',
+                        'controller' => 'Areas',
+                        'action' => 'add'
+                    )
+                )
+            ),
+            'area-delete' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/area/delete[/:id]',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Admin\Controller',
+                        'controller' => 'Areas',
+                        'action' => 'delete'
+                    )
+                )
+            ),
+            'area-get' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/area/get[/:id]',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Admin\Controller',
+                        'controller' => 'Areas',
                         'action' => 'fetch'
                     )
                 )

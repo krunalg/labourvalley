@@ -8,14 +8,16 @@ use Commons\Model\AbstractModel;
 use Zend\Db\Sql\Select;
 use Zend\Db\Sql\Delete;
 
-class City extends AbstractModel implements InputFilterAwareInterface
+class Area extends AbstractModel implements InputFilterAwareInterface
 {
 
     public $id;
 
+    public $state;
+    
     public $city;
 
-    public $state;
+    public $area;
 
     public $created_by = null;
 
@@ -25,7 +27,7 @@ class City extends AbstractModel implements InputFilterAwareInterface
 
     public $modified;
 
-    protected $_db_table_name = 'Admin\Model\DbTable\CityTable';
+    protected $_db_table_name = 'Admin\Model\DbTable\AreaTable';
 
     protected $_primary_key = 'id';
 
@@ -56,26 +58,37 @@ class City extends AbstractModel implements InputFilterAwareInterface
         return $rowsAffected;
     }
 
-    public function fetchCities()
+    public function fetchAreas()
     {
         $states = $this->find(array(
             'columns' => array(
                 'id',
+                'state',
                 'city',
-                'state'
+                'area'
             ),
             'where' => array(
-                'cities.status' => 1
+                'areas.status' => 1
             ),
             'order' => array(
-                'city'
+                'area'
             ),
             'joins' => array(
                 array(
                     'name' => array(
+                        'c' => 'cities'
+                    ),
+                    'on' => 'c.id =  areas.city',
+                    'columns' => array(
+                        'city_name'=>'city'
+                    ),
+                    'type' => 'left'
+                ),
+                array(
+                    'name' => array(
                         's' => 'states'
                     ),
-                    'on' => 's.id =  cities.state',
+                    'on' => 's.id =  areas.state',
                     'columns' => array(
                         'state'
                     ),
@@ -85,6 +98,7 @@ class City extends AbstractModel implements InputFilterAwareInterface
         ));
         return $states;
     }
+
     public function deleteCity($id)
     {
         $delete = new Delete();
@@ -112,7 +126,7 @@ class City extends AbstractModel implements InputFilterAwareInterface
         if (! $this->inputFilter) {
             $inputFilter = new InputFilter();
             $inputFilter->add(array(
-                'name' => 'city',
+                'name' => 'area',
                 'required' => true,
                 'filters' => array(
                     array(
@@ -129,6 +143,26 @@ class City extends AbstractModel implements InputFilterAwareInterface
                             'encoding' => 'UTF-8',
                             'min' => 1,
                             'max' => 100
+                        )
+                    )
+                )
+            ));
+            $inputFilter->add(array(
+                'name' => 'city',
+                'required' => true,
+                'filters' => array(
+                    array(
+                        'name' => 'StripTags'
+                    ),
+                    array(
+                        'name' => 'StringTrim'
+                    )
+                ),
+                'validators' => array(
+                    array(
+                        'name' => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8'
                         )
                     )
                 )
@@ -158,12 +192,13 @@ class City extends AbstractModel implements InputFilterAwareInterface
         return $this->inputFilter;
     }
 
-    public function fetchCity($id)
+    public function fetchArea($id)
     {
         try {
             $row = $this->find(array(
                 'columns' => array(
                     'id',
+                    'area',
                     'city',
                     'state'
                 ),
