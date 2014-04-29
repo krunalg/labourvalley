@@ -8,10 +8,12 @@ use Commons\Model\AbstractModel;
 use Zend\Db\Sql\Select;
 use Zend\Db\Sql\Delete;
 
-class State extends AbstractModel implements InputFilterAwareInterface
+class City extends AbstractModel implements InputFilterAwareInterface
 {
 
     public $id;
+
+    public $city;
 
     public $state;
 
@@ -23,7 +25,7 @@ class State extends AbstractModel implements InputFilterAwareInterface
 
     public $modified;
 
-    protected $_db_table_name = 'Admin\Model\DbTable\StateTable';
+    protected $_db_table_name = 'Admin\Model\DbTable\CityTable';
 
     protected $_primary_key = 'id';
 
@@ -54,34 +56,47 @@ class State extends AbstractModel implements InputFilterAwareInterface
         return $rowsAffected;
     }
 
-    public function fetchStates()
+    public function fetchCities()
     {
         $states = $this->find(array(
             'columns' => array(
                 'id',
+                'city',
                 'state'
             ),
             'where' => array(
-                'status' => 1
+                'cities.status' => 1
             ),
-            'order'=>array(
-            	'state'
+            'order' => array(
+                'city'
+            ),
+            'joins' => array(
+                array(
+                    'name' => array(
+                        's' => 'states'
+                    ),
+                    'on' => 's.id =  cities.state',
+                    'columns' => array(
+                        'state'
+                    ),
+                    'type' => 'left'
+                )
             )
         ));
         return $states;
     }
-
-    public function deleteState($id)
+    public function deleteCity($id)
     {
-        $delete = new Delete ();
+        $delete = new Delete();
         $status = false;
         try {
-            $delete->from ( $this->getDbTable ()->getTableName () );
-            $where = new \Zend\Db\Sql\Where ();
+            $delete->from($this->getDbTable()
+                ->getTableName());
+            $where = new \Zend\Db\Sql\Where();
             $where->equalTo('id', $id);
-            $delete->where ( $where );
-            $writeGateway = $this->getDbTable ()->getWriteGateway ();
-            $rowsAffected = $writeGateway->delete ( $where );
+            $delete->where($where);
+            $writeGateway = $this->getDbTable()->getWriteGateway();
+            $rowsAffected = $writeGateway->delete($where);
             if ($rowsAffected > 0) {
                 $status = true;
             }
@@ -97,7 +112,7 @@ class State extends AbstractModel implements InputFilterAwareInterface
         if (! $this->inputFilter) {
             $inputFilter = new InputFilter();
             $inputFilter->add(array(
-                'name' => 'state',
+                'name' => 'city',
                 'required' => true,
                 'filters' => array(
                     array(
@@ -114,13 +129,26 @@ class State extends AbstractModel implements InputFilterAwareInterface
                             'encoding' => 'UTF-8',
                             'min' => 1,
                             'max' => 100
-                        ),
-                        array(
-                            'name' => 'Db\RecordExists',
-                            'options' => array(
-                                'table' => 'states',
-                                'field' => 'state'
-                            )
+                        )
+                    )
+                )
+            ));
+            $inputFilter->add(array(
+                'name' => 'state',
+                'required' => true,
+                'filters' => array(
+                    array(
+                        'name' => 'StripTags'
+                    ),
+                    array(
+                        'name' => 'StringTrim'
+                    )
+                ),
+                'validators' => array(
+                    array(
+                        'name' => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8'
                         )
                     )
                 )
@@ -129,17 +157,30 @@ class State extends AbstractModel implements InputFilterAwareInterface
         }
         return $this->inputFilter;
     }
-    public function fetchState($id){
-    	try{
-    	    $row = $this->find(array(
-    	    	'columns'=>array('id','state'),
-    	        'where'=>array('id'=>$id,'status'=>1)
-    	    ))->current();
-    	    return $row->toArray();
-    	}catch(\Exception $ex){
-    	    return array('status'=>'failed','data'=>$ex->getMessage());
-    	}
+
+    public function fetchCity($id)
+    {
+        try {
+            $row = $this->find(array(
+                'columns' => array(
+                    'id',
+                    'city',
+                    'state'
+                ),
+                'where' => array(
+                    'id' => $id,
+                    'status' => 1
+                )
+            ))->current();
+            return $row->toArray();
+        } catch (\Exception $ex) {
+            return array(
+                'status' => 'failed',
+                'data' => $ex->getMessage()
+            );
+        }
     }
+
     public function getArrayCopy()
     {
         return get_object_vars($this);

@@ -3,7 +3,9 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Admin\Controller\Index' => 'Admin\Controller\IndexController',
-            'Admin\Controller\States' => 'Admin\Controller\StatesController'
+            'Admin\Controller\States' => 'Admin\Controller\StatesController',
+            'Admin\Controller\Cities' => 'Admin\Controller\CitiesController',
+            'Admin\Controller\Areas' => 'Admin\Controller\AreasController'
         )
     ),
     'controller_plugins' => array(
@@ -75,7 +77,73 @@ return array(
                         'action' => 'fetch'
                     )
                 )
-            )
+            ),
+            'city-add' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/manage/cities',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Admin\Controller',
+                        'controller' => 'Cities',
+                        'action' => 'add'
+                    )
+                )
+            ),
+            'city-delete' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/city/delete[/:id]',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Admin\Controller',
+                        'controller' => 'Cities',
+                        'action' => 'delete'
+                    )
+                )
+            ),
+            'city-get' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/city/get[/:id]',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Admin\Controller',
+                        'controller' => 'Cities',
+                        'action' => 'fetch'
+                    )
+                )
+            ),
+            'area-add' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/manage/areas',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Admin\Controller',
+                        'controller' => 'Areas',
+                        'action' => 'add'
+                    )
+                )
+            ),
+            'area-delete' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/area/delete[/:id]',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Admin\Controller',
+                        'controller' => 'Areas',
+                        'action' => 'delete'
+                    )
+                )
+            ),
+            'area-get' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/area/get[/:id]',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Admin\Controller',
+                        'controller' => 'Areas',
+                        'action' => 'fetch'
+                    )
+                )
+            ),
         )
     ),
     'view_manager' => array(

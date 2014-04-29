@@ -431,12 +431,19 @@ jQuery(document).ready(function(){
 			}
 		});
 	});
-	jQuery(document).on("click",".edit-item",function(e){
+	jQuery(document).on("click",".edit-state",function(e){
 		var that = jQuery(this);
 		e.preventDefault();
 		e.stopImmediatePropagation();
 		var url = "/state/get/"+getId(jQuery(this));
 		ajaxCall(url,focusOnState);
+	});
+	jQuery(document).on("click",".edit-city",function(e){
+		var that = jQuery(this);
+		e.preventDefault();
+		e.stopImmediatePropagation();
+		var url = "/city/get/"+getId(jQuery(this));
+		ajaxCall(url,focusOnCity);
 	});
 	if(jQuery("div.alert").length){
 		setTimeout(function(){
@@ -475,6 +482,21 @@ var focusOnState = function(data){
 		}
 		if(key=='state'){
 			jQuery('#state').val(jQuery.trim(val));
+		}
+	});
+}
+var focusOnCity = function(data){
+	jQuery('#state').focus();
+	jQuery('html, body').animate({ scrollTop: jQuery(".widgettitle").offset().top }, 500);
+	jQuery.each(data,function(key,val){
+		if(key=='id'){
+			jQuery("input[name=id]").val(jQuery.trim(val));
+		}
+		if(key=='state'){
+			jQuery('#state').val(jQuery.trim(val));
+		}
+		if(key=='city'){
+			jQuery('#city').val(jQuery.trim(val));
 		}
 	});
 }

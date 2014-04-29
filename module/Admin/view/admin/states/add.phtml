@@ -37,7 +37,7 @@
 				<tr>
 					<td><?php echo $state['state']; ?></td>
 					<td>
-					   <a href="javascript:void(0);" id="edit-<?php echo $state['id']; ?>" class="btn btn-info edit-item"><i class="iconfa-pencil"></i></a>
+					   <a href="javascript:void(0);" id="edit-<?php echo $state['id']; ?>" class="btn btn-info edit-state"><i class="iconfa-pencil"></i></a>
 					   <a href="/state/delete/<?php echo $state['id']; ?>" class="btn btn-danger delete-item"><i class="icon-trash icon-white"></i></a>
 					</td>
 				</tr>
@@ -53,5 +53,17 @@
 	<!--widgetcontent-->
 </div>
 <script>
-jQuery("#state-form").validate();
+jQuery(document).ready(function(){
+	if(jQuery('#dyntable').length > 0) {
+		jQuery('#dyntable').dataTable({
+			"sPaginationType": "full_numbers",
+			"bFilter": false,
+			"aaSortingFixed": [[0,'asc']],
+			"fnDrawCallback": function(oSettings) {
+				//jQuery.uniform.update();
+			}
+		});
+	}
+	jQuery("#state-form").validate();
+});
 </script>

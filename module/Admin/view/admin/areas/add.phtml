@@ -1,0 +1,91 @@
+<div class="span">
+	<h4 class="widgettitle nomargin shadowed">States</h4>
+	<div class="widgetcontent bordered shadowed">
+		<div class="dyn-table">
+    <?php
+    $form = $this->areaForm;
+    $form->prepare();
+    $form->setAttribute('action', $this->url(NULL, array(
+        'controller' => 'Cities',
+        'action' => 'add'
+    )));
+    $form->setAttribute('method', 'post');
+    echo $this->form()->openTag($form);
+    ?>
+            <?php
+                echo $this->formElement($form->get('id'));
+            ?>
+            <?php
+                echo $this->formElement($form->get('state'));
+                echo $this->formElementErrors($form->get('state'));
+            ?>
+            <?php
+                echo $this->formElement($form->get('city'));
+                echo $this->formElementErrors($form->get('city'));
+            ?>
+            <?php
+                echo $this->formElement($form->get('area'));
+                echo $this->formElementErrors($form->get('area'));
+            ?>
+            <p>
+				<?php echo $this->formElement($form->get('submit')); ?>
+			</p>
+		</div>
+		<hr />
+		<table class="table table-bordered" id="dyntable">
+			<thead>
+				<tr>
+					<th class="head0" width="30%">Area</th>
+					<th class="head0" width="30%">City</th>
+					<th class="head1" width="40%">Action</th>
+				</tr>
+			</thead>
+			<tbody>
+			<?php
+if (isset($this->areas) && ! empty($this->areas)) {
+    foreach ($this->areas as $area) {
+        ?>
+				<tr>
+					<td><?php echo $area['area']; ?></td>
+					<td><?php echo $area['city']; ?></td>
+					<td><a href="javascript:void(0);"
+						id="edit-<?php echo $area['id']; ?>"
+						class="btn btn-info edit-city"><i class="iconfa-pencil"></i></a> <a
+						href="/area/delete/<?php echo $area['id']; ?>"
+						class="btn btn-danger delete-item"><i
+							class="icon-trash icon-white"></i></a></td>
+				</tr>
+			<?php }}else{ ?>
+			     <tr>
+					<td colspan="2">No areas found</td>
+				</tr>
+			<?php } ?>	
+			</tbody>
+		</table>
+	</div>
+	<!--widgetcontent-->
+</div>
+<script>
+jQuery(document).ready(function(){
+	jQuery("#area-form").validate();
+	/*if(jQuery('#dyntable').length > 0) {
+		jQuery('#dyntable').dataTable({
+			"sPaginationType": "full_numbers",
+			"bFilter": false,
+			"aaSortingFixed": [[0,'asc']],
+			"fnDrawCallback": function(oSettings) {
+				//jQuery.uniform.update();
+			}
+		});
+	}*/
+	jQuery("#state").on("change",function(){
+		jQuery.ajax({
+			url:"/fetch/cities/"+jQuery.trim(jQuery(this).val()),
+			type:"get",
+			success:function(){
+				console.log("success")
+			}
+		});
+	});
+});
+</script>
