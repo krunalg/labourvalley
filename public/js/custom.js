@@ -442,7 +442,7 @@ jQuery(document).ready(function(){
 		var that = jQuery(this);
 		e.preventDefault();
 		e.stopImmediatePropagation();
-		var url = "/city/get/"+getId(jQuery(this));
+		var url = "/cities/get/"+getId(jQuery(this));
 		ajaxCall(url,focusOnCity);
 	});
 	if(jQuery("div.alert").length){
@@ -450,8 +450,16 @@ jQuery(document).ready(function(){
 			jQuery("div.alert").fadeOut(500);
 		},10000);
 	}
-	
 });
+var bindCitiesAjax = function(element){
+	jQuery.ajax({
+		url:"/cities/get/"+jQuery.trim(element.val()),
+		type:"get",
+		success:function(cities){
+			console.log("success")
+		}
+	});
+}
 var ajaxCall = function(url,fun){
 	jQuery.ajax({
 		url:url,

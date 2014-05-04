@@ -13,19 +13,21 @@
     echo $this->form()->openTag($form);
     ?>
             <?php
-                echo $this->formElement($form->get('id'));
+            echo $this->formElement($form->get('id'));
+            echo $this->formElement($form->get('latitude'));
+            echo $this->formElement($form->get('longitude'));
             ?>
             <?php
-                echo $this->formElement($form->get('state'));
-                echo $this->formElementErrors($form->get('state'));
+            echo $this->formElement($form->get('state'));
+            echo $this->formElementErrors($form->get('state'));
             ?>
             <?php
-                echo $this->formElement($form->get('city'));
-                echo $this->formElementErrors($form->get('city'));
+            echo $this->formElement($form->get('city'));
+            echo $this->formElementErrors($form->get('city'));
             ?>
             <?php
-                echo $this->formElement($form->get('area'));
-                echo $this->formElementErrors($form->get('area'));
+            echo $this->formElement($form->get('area'));
+            echo $this->formElementErrors($form->get('area'));
             ?>
             <p>
 				<?php echo $this->formElement($form->get('submit')); ?>
@@ -78,14 +80,8 @@ jQuery(document).ready(function(){
 			}
 		});
 	}*/
-	jQuery("#state").on("change",function(){
-		jQuery.ajax({
-			url:"/fetch/cities/"+jQuery.trim(jQuery(this).val()),
-			type:"get",
-			success:function(){
-				console.log("success")
-			}
-		});
+    jQuery("#state").on("change",function(){
+        bindCitiesAjax(jQuery(this));
 	});
 });
 </script>

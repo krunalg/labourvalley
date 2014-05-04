@@ -17,6 +17,10 @@ class City extends AbstractModel implements InputFilterAwareInterface
 
     public $state;
 
+    public $latitude;
+    
+    public $longitude;
+    
     public $created_by = null;
 
     public $modified_by = null;
@@ -56,9 +60,10 @@ class City extends AbstractModel implements InputFilterAwareInterface
         return $rowsAffected;
     }
 
-    public function fetchCities()
+    public function fetchCities($state_id=null)
     {
-        $states = $this->find(array(
+        $this->getDbTable()->setArrayObjectPrototype ( 'ArrayObject' );
+        $options = array(
             'columns' => array(
                 'id',
                 'city',
@@ -82,7 +87,11 @@ class City extends AbstractModel implements InputFilterAwareInterface
                     'type' => 'left'
                 )
             )
-        ));
+        );
+        if($state_id!=null){
+            $options['where']['cities.state'] = $state_id;
+        }
+        $states = $this->find($options);
         return $states;
     }
     public function deleteCity($id)
@@ -160,6 +169,7 @@ class City extends AbstractModel implements InputFilterAwareInterface
 
     public function fetchCity($id)
     {
+        $this->getDbTable()->setArrayObjectPrototype ( 'ArrayObject' );
         try {
             $row = $this->find(array(
                 'columns' => array(
@@ -172,17 +182,12 @@ class City extends AbstractModel implements InputFilterAwareInterface
                     'status' => 1
                 )
             ))->current();
-            return $row->toArray();
+            return $row->getArrayCopy();
         } catch (\Exception $ex) {
             return array(
                 'status' => 'failed',
                 'data' => $ex->getMessage()
             );
         }
-    }
-
-    public function getArrayCopy()
-    {
-        return get_object_vars($this);
     }
 }

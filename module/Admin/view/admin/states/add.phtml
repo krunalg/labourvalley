@@ -12,11 +12,13 @@
     echo $this->form()->openTag($form);
     ?>
             <?php
-                echo $this->formElement($form->get('id'));
+            echo $this->formElement($form->get('id'));
+            echo $this->formElement($form->get('latitude'));
+            echo $this->formElement($form->get('longitude'));
             ?>
             <?php
-                echo $this->formElement($form->get('state'));
-                echo $this->formElementErrors($form->get('state'));
+            echo $this->formElement($form->get('state'));
+            echo $this->formElementErrors($form->get('state'));
             ?>
             <p>
 				<?php echo $this->formElement($form->get('submit')); ?>
@@ -31,20 +33,22 @@
 			</thead>
 			<tbody>
 			<?php
-			     if(isset($this->states) && !empty($this->states)){ 
-                 foreach($this->states as $state){
-			?>
+if (isset($this->states) && ! empty($this->states)) {
+    foreach ($this->states as $state) {
+        ?>
 				<tr>
 					<td><?php echo $state['state']; ?></td>
-					<td>
-					   <a href="javascript:void(0);" id="edit-<?php echo $state['id']; ?>" class="btn btn-info edit-state"><i class="iconfa-pencil"></i></a>
-					   <a href="/state/delete/<?php echo $state['id']; ?>" class="btn btn-danger delete-item"><i class="icon-trash icon-white"></i></a>
-					</td>
+					<td><a href="javascript:void(0);"
+						id="edit-<?php echo $state['id']; ?>"
+						class="btn btn-info edit-state"><i class="iconfa-pencil"></i></a>
+						<a href="/state/delete/<?php echo $state['id']; ?>"
+						class="btn btn-danger delete-item"><i
+							class="icon-trash icon-white"></i></a></td>
 				</tr>
 			<?php }}else{ ?>
 			     <tr>
-			         <td colspan="2">No states found</td>
-			     </tr>
+					<td colspan="2">No states found</td>
+				</tr>
 			<?php } ?>	
 			</tbody>
 		</table>

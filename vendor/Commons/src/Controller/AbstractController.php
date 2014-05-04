@@ -35,4 +35,15 @@ class AbstractController extends ActionController
             }
         }
     }
+
+    public function setErrorMessages($messages)
+    {
+        $errors = array();
+        foreach ($messages as $key => $msg) {
+            foreach ($msg as $text) {
+                $errors[] = ucfirst($key) . " : " . strtolower($text);
+            }
+        }
+        $this->layout()->setVariable('errorMessages', $errors);
+    }
 }

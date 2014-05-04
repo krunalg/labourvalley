@@ -1,4 +1,17 @@
 <?php
+if (isset($this->errorMessages)) {
+    ?>
+<div class="alert alert-error alert-danger">
+	<button aria-hidden="true" data-dismiss="alert" class="close"
+		type="button">×</button>
+	<?php 
+	   foreach($this->errorMessages as $message){
+            echo "<li>".$message."</li>";
+       }
+	?>
+</div>
+<?php
+} else {
     $flash = $this->flashMessenger();
     if (isset($flash)) {
         $flash->setMessageOpenFormat('<div%s>
@@ -29,4 +42,5 @@
             'alert-success'
         ));
     }
+}
 ?>

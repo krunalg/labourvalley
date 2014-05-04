@@ -15,6 +15,10 @@ class State extends AbstractModel implements InputFilterAwareInterface
 
     public $state;
 
+    public $latitude;
+
+    public $longitude;
+
     public $created_by = null;
 
     public $modified_by = null;
@@ -64,8 +68,8 @@ class State extends AbstractModel implements InputFilterAwareInterface
             'where' => array(
                 'status' => 1
             ),
-            'order'=>array(
-            	'state'
+            'order' => array(
+                'state'
             )
         ));
         return $states;
@@ -73,15 +77,16 @@ class State extends AbstractModel implements InputFilterAwareInterface
 
     public function deleteState($id)
     {
-        $delete = new Delete ();
+        $delete = new Delete();
         $status = false;
         try {
-            $delete->from ( $this->getDbTable ()->getTableName () );
-            $where = new \Zend\Db\Sql\Where ();
+            $delete->from($this->getDbTable()
+                ->getTableName());
+            $where = new \Zend\Db\Sql\Where();
             $where->equalTo('id', $id);
-            $delete->where ( $where );
-            $writeGateway = $this->getDbTable ()->getWriteGateway ();
-            $rowsAffected = $writeGateway->delete ( $where );
+            $delete->where($where);
+            $writeGateway = $this->getDbTable()->getWriteGateway();
+            $rowsAffected = $writeGateway->delete($where);
             if ($rowsAffected > 0) {
                 $status = true;
             }
@@ -114,13 +119,48 @@ class State extends AbstractModel implements InputFilterAwareInterface
                             'encoding' => 'UTF-8',
                             'min' => 1,
                             'max' => 100
-                        ),
-                        array(
-                            'name' => 'Db\RecordExists',
-                            'options' => array(
-                                'table' => 'states',
-                                'field' => 'state'
-                            )
+                        )
+                    )
+                )
+            ));
+            $inputFilter->add(array(
+                'name' => 'latitude',
+                'required' => true,
+                'filters' => array(
+                    array(
+                        'name' => 'StripTags'
+                    ),
+                    array(
+                        'name' => 'StringTrim'
+                    )
+                ),
+                'validators' => array(
+                    array(
+                        'name' => 'not-empty',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min' => 1
+                        )
+                    )
+                )
+            ));
+            $inputFilter->add(array(
+                'name' => 'longitude',
+                'required' => true,
+                'filters' => array(
+                    array(
+                        'name' => 'StripTags'
+                    ),
+                    array(
+                        'name' => 'StringTrim'
+                    )
+                ),
+                'validators' => array(
+                    array(
+                        'name' => 'not-empty',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min' => 1
                         )
                     )
                 )
@@ -129,17 +169,29 @@ class State extends AbstractModel implements InputFilterAwareInterface
         }
         return $this->inputFilter;
     }
-    public function fetchState($id){
-    	try{
-    	    $row = $this->find(array(
-    	    	'columns'=>array('id','state'),
-    	        'where'=>array('id'=>$id,'status'=>1)
-    	    ))->current();
-    	    return $row->toArray();
-    	}catch(\Exception $ex){
-    	    return array('status'=>'failed','data'=>$ex->getMessage());
-    	}
+
+    public function fetchState($id)
+    {
+        try {
+            $row = $this->find(array(
+                'columns' => array(
+                    'id',
+                    'state'
+                ),
+                'where' => array(
+                    'id' => $id,
+                    'status' => 1
+                )
+            ))->current();
+            return $row->toArray();
+        } catch (\Exception $ex) {
+            return array(
+                'status' => 'failed',
+                'data' => $ex->getMessage()
+            );
+        }
     }
+
     public function getArrayCopy()
     {
         return get_object_vars($this);

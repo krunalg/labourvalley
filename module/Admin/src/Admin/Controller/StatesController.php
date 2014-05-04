@@ -41,9 +41,9 @@ class StatesController extends AbstractController
                     echo $ex->getMessage();
                 }
                 if ($status) {
-                    if(isset($data['id']) && $data['id']!=""){
+                    if (isset($data['id']) && $data['id'] != "") {
                         $this->flashMessenger()->addSuccessMessage('State has been updated successfully');
-                    }else{
+                    } else {
                         $this->flashMessenger()->addSuccessMessage('State has been added successfully');
                     }
                 } else {
@@ -51,7 +51,8 @@ class StatesController extends AbstractController
                 }
                 $this->redirect()->toRoute('state-add');
             } else {
-                // print_r($stateForm->getMessages());
+                $errorMessages = $stateForm->getMessages();
+                $this->setErrorMessages($errorMessages);
             }
         }
         $view = new ViewModel(array(

@@ -18,6 +18,10 @@ class Area extends AbstractModel implements InputFilterAwareInterface
     public $city;
 
     public $area;
+    
+    public $latitude;
+    
+    public $longitude;
 
     public $created_by = null;
 

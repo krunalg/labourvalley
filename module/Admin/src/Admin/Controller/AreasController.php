@@ -31,7 +31,7 @@ class AreasController extends AbstractController
         ));
         $request = $this->getRequest();
         $areaList = $area->fetchAreas()->toArray();
-        print_r($areaList);
+        //print_r($areaList);
         if ($request->isPost()) {
             $areaForm->setInputFilter($area->getInputFilter());
             $areaForm->setData($request->getPost());
