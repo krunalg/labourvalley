@@ -1,6 +1,7 @@
 jQuery.noConflict();
 
 jQuery(document).ready(function(){
+	jQuery.fn.dataTableExt.sErrMode = 'throw';
 	
 	//prettyPrint();			//syntax highlighter
 	mainwrapperHeight();
@@ -445,23 +446,38 @@ jQuery(document).ready(function(){
 		var url = "/cities/get/"+getId(jQuery(this));
 		ajaxCall(url,focusOnCity);
 	});
+	jQuery(document).on("click",".edit-area",function(e){
+		var that = jQuery(this);
+		e.preventDefault();
+		e.stopImmediatePropagation();
+		var url = "/area/get/"+getId(jQuery(this));
+		ajaxCall(url,focusOnArea);
+	});
 	if(jQuery("div.alert").length){
 		setTimeout(function(){
 			jQuery("div.alert").fadeOut(500);
 		},10000);
 	}
 });
-var bindCitiesAjax = function(element,targetElem){
+var bindCitiesAjax = function(element,targetElem, city){
+	var city_id = 0;
+	if(jQuery.trim(element.val())!=""){
+		city_id = jQuery.trim(element.val());
+	}
 	jQuery.ajax({
-		url:"/cities/get/"+jQuery.trim(element.val()),
+		url:"/cities/get/"+city_id,
 		type:"get",
 		dataType:'json',
 		success:function(cities){
-			if(Object.keys(cities).length){
+			if(cities){
+				targetElem.empty().append('<option value="">Select city</option>');
 				jQuery.each(cities,function(key,val){
 					//console.log(val)
 					targetElem.append(jQuery('<option></option>').val(val.id).html(val.city));
 				});
+			}
+			if(typeof city !== 'undefined'){
+				targetElem.val(city);
 			}
 		}
 	});
@@ -511,6 +527,28 @@ var focusOnCity = function(data){
 		}
 		if(key=='city'){
 			jQuery('#city').val(jQuery.trim(val));
+		}
+	});
+}
+var focusOnArea = function(data){
+	jQuery('#state').focus();
+	jQuery('html, body').animate({ scrollTop: jQuery(".widgettitle").offset().top }, 500);
+	if(data){
+		jQuery('#state').val(jQuery.trim(data.state));
+		bindCitiesAjax(jQuery("#state"),jQuery("#city"),data.city);
+	}
+	jQuery.each(data,function(key,val){
+		if(key=='id'){
+			jQuery("input[name=id]").val(jQuery.trim(val));
+		}
+		if(key=='state'){
+			jQuery('#state').val(jQuery.trim(val));
+		}
+		if(key=='city'){
+			jQuery('#city').val(jQuery.trim(val));
+		}
+		if(key=='area'){
+			jQuery('#area').val(jQuery.trim(val));
 		}
 	});
 }

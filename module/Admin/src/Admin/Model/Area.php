@@ -64,6 +64,7 @@ class Area extends AbstractModel implements InputFilterAwareInterface
 
     public function fetchAreas()
     {
+    	$this->getDbTable()->setArrayObjectPrototype ( 'ArrayObject' );
         $states = $this->find(array(
             'columns' => array(
                 'id',
@@ -103,7 +104,7 @@ class Area extends AbstractModel implements InputFilterAwareInterface
         return $states;
     }
 
-    public function deleteCity($id)
+    public function deleteArea($id)
     {
         $delete = new Delete();
         $status = false;
@@ -198,6 +199,7 @@ class Area extends AbstractModel implements InputFilterAwareInterface
 
     public function fetchArea($id)
     {
+    	$this->getDbTable()->setArrayObjectPrototype ( 'ArrayObject' );
         try {
             $row = $this->find(array(
                 'columns' => array(
@@ -211,7 +213,7 @@ class Area extends AbstractModel implements InputFilterAwareInterface
                     'status' => 1
                 )
             ))->current();
-            return $row->toArray();
+            return $row->getArrayCopy();
         } catch (\Exception $ex) {
             return array(
                 'status' => 'failed',

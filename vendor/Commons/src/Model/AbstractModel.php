@@ -109,6 +109,7 @@ abstract class AbstractModel {
 				$select->join($join['name'], $join['on'],$join['columns'],$join['type']);
 			}
 		}
+		//echo $select->getSqlString();
 		$results = $this->getDbTable ()->getReadGateway ()->selectWith ( $select );
 		return $results;
 	}
