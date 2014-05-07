@@ -451,12 +451,18 @@ jQuery(document).ready(function(){
 		},10000);
 	}
 });
-var bindCitiesAjax = function(element){
+var bindCitiesAjax = function(element,targetElem){
 	jQuery.ajax({
 		url:"/cities/get/"+jQuery.trim(element.val()),
 		type:"get",
+		dataType:'json',
 		success:function(cities){
-			console.log("success")
+			if(Object.keys(cities).length){
+				jQuery.each(cities,function(key,val){
+					//console.log(val)
+					targetElem.append(jQuery('<option></option>').val(val.id).html(val.city));
+				});
+			}
 		}
 	});
 }
