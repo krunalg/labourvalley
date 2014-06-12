@@ -136,7 +136,7 @@ class State extends AbstractModel implements InputFilterAwareInterface
                 ),
                 'validators' => array(
                     array(
-                        'name' => 'not-empty',
+                        /*'name' => 'not-empty',*/
                         'options' => array(
                             'encoding' => 'UTF-8',
                             'min' => 1
@@ -157,7 +157,7 @@ class State extends AbstractModel implements InputFilterAwareInterface
                 ),
                 'validators' => array(
                     array(
-                        'name' => 'not-empty',
+                        /*'name' => 'not-empty',*/
                         'options' => array(
                             'encoding' => 'UTF-8',
                             'min' => 1

@@ -31,6 +31,7 @@ class StateForm extends Form
                 'required' => 'required',
                 'id' => 'state',
                 'placeholder' => 'State',
+            		'class'=>'typehead',
                 'autocomplete'=>'off'
             ),
             'options' => array(

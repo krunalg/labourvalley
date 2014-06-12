@@ -7,7 +7,6 @@ jQuery(document).ready(function(){
 	mainwrapperHeight();
 	responsive();
 	
-	
 	// animation
 	if(jQuery('.contentinner').hasClass('content-dashboard')) {
 		var anicount = 4;	
@@ -481,7 +480,7 @@ var bindCitiesAjax = function(element,targetElem, city){
 			}
 		}
 	});
-}
+};
 var ajaxCall = function(url,fun){
 	jQuery.ajax({
 		url:url,
@@ -497,12 +496,12 @@ var ajaxCall = function(url,fun){
 			}
 		}
 	});
-}
+};
 var getId = function(element){
 	var idStr = element.attr("id");
 	var idArr = idStr.split("-");
 	return idArr[1];
-}
+};
 var focusOnState = function(data){
 	jQuery('#state').focus();
 	jQuery('html, body').animate({ scrollTop: jQuery(".widgettitle").offset().top }, 500);
@@ -514,7 +513,7 @@ var focusOnState = function(data){
 			jQuery('#state').val(jQuery.trim(val));
 		}
 	});
-}
+};
 var focusOnCity = function(data){
 	jQuery('#state').focus();
 	jQuery('html, body').animate({ scrollTop: jQuery(".widgettitle").offset().top }, 500);
@@ -529,7 +528,7 @@ var focusOnCity = function(data){
 			jQuery('#city').val(jQuery.trim(val));
 		}
 	});
-}
+};
 var focusOnArea = function(data){
 	jQuery('#state').focus();
 	jQuery('html, body').animate({ scrollTop: jQuery(".widgettitle").offset().top }, 500);
@@ -551,4 +550,42 @@ var focusOnArea = function(data){
 			jQuery('#area').val(jQuery.trim(val));
 		}
 	});
-}
+};
+var getRegionDetails = function(addrValue,type){
+	var results = {};
+	var gc = new google.maps.Geocoder();
+	gc.geocode({'address':addrValue,'componentRestrictions':{'country':'IN'}},function(res,status){
+		if(status == "OK"){
+			results = extractRegionData(res,type);
+		}
+	});
+	//return results;
+};
+var extractRegionData = function(res,type){
+	var result = [];
+	switch(type){
+		case 'state':
+			totalResults = Object.keys(res).length;
+			jQuery.each(res,function(akey,aval){
+				var addrData = {};
+				if(aval.address_components.length==2 && aval.types[0] == 'administrative_area_level_1'){
+					addrData.name = aval.address_components[0].long_name;
+					addrData.location = {};
+					addrData.location.latitude = aval.geometry.location.lat();
+					addrData.location.longitue = aval.geometry.location.lng()
+					result.push(addrData);
+				}
+			});
+			break;
+		case 'city':
+			console.log("requested for city");
+			break;
+		case 'area':
+			console.log("requested for area");
+			break;
+		default:
+			console.log("no matching request found");
+		
+		return result;
+	}
+};
