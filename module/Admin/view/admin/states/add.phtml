@@ -2,22 +2,24 @@
 	<h4 class="widgettitle nomargin shadowed">States</h4>
 	<div class="widgetcontent bordered shadowed">
 		  <?php
-    $form = $this->stateForm;
-    $form->prepare();
-    $form->setAttribute('action', $this->url(NULL, array(
-        'controller' => 'States',
-        'action' => 'add'
-    )));
-    $form->setAttribute('method', 'post');
-    echo $this->form()->openTag($form);
-    ?>
+				$form = $this->stateForm;
+				$form->prepare ();
+				$form->setAttribute ( 'action', $this->url ( NULL, array (
+						'controller' => 'States',
+						'action' => 'add' 
+				) ) );
+				$form->setAttribute ( 'method', 'post' );
+				echo $this->form ()->openTag ( $form );
+				?>
             <?php
-                echo $this->formElement($form->get('id'));
-            ?>
+												echo $this->formElement ( $form->get ( 'id' ) );
+												echo $this->formElement ( $form->get ( 'latitude' ) );
+												echo $this->formElement ( $form->get ( 'longitude' ) );
+												?>
             <?php
-                echo $this->formElement($form->get('state'));
-                echo $this->formElementErrors($form->get('state'));
-            ?>
+												echo $this->formElement ( $form->get ( 'state' ) );
+												echo $this->formElementErrors ( $form->get ( 'state' ) );
+												?>
             <p>
 				<?php echo $this->formElement($form->get('submit')); ?>
 			</p>
@@ -31,20 +33,22 @@
 			</thead>
 			<tbody>
 			<?php
-			     if(isset($this->states) && !empty($this->states)){ 
-                 foreach($this->states as $state){
-			?>
+			if (isset ( $this->states ) && ! empty ( $this->states )) {
+				foreach ( $this->states as $state ) {
+					?>
 				<tr>
 					<td><?php echo $state['state']; ?></td>
-					<td>
-					   <a href="javascript:void(0);" id="edit-<?php echo $state['id']; ?>" class="btn btn-info edit-state"><i class="iconfa-pencil"></i></a>
-					   <a href="/state/delete/<?php echo $state['id']; ?>" class="btn btn-danger delete-item"><i class="icon-trash icon-white"></i></a>
-					</td>
+					<td><a href="javascript:void(0);"
+						id="edit-<?php echo $state['id']; ?>"
+						class="btn btn-info edit-state"><i class="iconfa-pencil"></i></a>
+						<a href="/state/delete/<?php echo $state['id']; ?>"
+						class="btn btn-danger delete-item"><i
+							class="icon-trash icon-white"></i></a></td>
 				</tr>
 			<?php }}else{ ?>
 			     <tr>
-			         <td colspan="2">No states found</td>
-			     </tr>
+					<td colspan="2">No states found</td>
+				</tr>
 			<?php } ?>	
 			</tbody>
 		</table>
@@ -54,16 +58,70 @@
 </div>
 <script>
 jQuery(document).ready(function(){
-	if(jQuery('#dyntable').length > 0) {
-		jQuery('#dyntable').dataTable({
-			"sPaginationType": "full_numbers",
-			"bFilter": false,
-			"aaSortingFixed": [[0,'asc']],
-			"fnDrawCallback": function(oSettings) {
+	try{
+		if(jQuery('#dyntable').length > 0) {
+			jQuery('#dyntable').dataTable({
+				"sPaginationType": "full_numbers",
+				"bFilter": false,
+				"aaSortingFixed": [[0,'asc']],
+				"fnDrawCallback": function(oSettings) {
 				//jQuery.uniform.update();
-			}
-		});
+				}
+			});
+		}
+	}catch(e){
+		console.log(e);
 	}
 	jQuery("#state-form").validate();
+	/*jQuery('#state').typing({
+		stop:function(event,elem){
+			getRegionDetails(jQuery.trim(elem.val()),"state");
+		}
+	});*/
+		 
+		jQuery('#state').typeahead({
+				hint: true,
+				highlight: true,
+				minLength: 1
+			},
+			{
+				name: 'states',
+				displayKey: 'value',
+				source: function (query, process) {
+				    states = [];
+				    map = {};
+				 
+				    var data = [
+				        {"stateCode": "CA", "stateName": "California"},
+				        {"stateCode": "AZ", "stateName": "Arizona"},
+				        {"stateCode": "NY", "stateName": "New York"},
+				        {"stateCode": "NV", "stateName": "Nevada"},
+				        {"stateCode": "OH", "stateName": "Ohio"}
+				    ];
+				 
+				    jQuery.each(data, function (i, state) {
+				        map[state.stateName] = state;
+				        states.push(state.stateName);
+				    });
+				 
+				    process(states);
+				},
+				matcher: function (item) {
+				    if (item.toLowerCase().indexOf(this.query.trim().toLowerCase()) != -1) {
+				        return true;
+				    }
+				},
+				sorter: function (items) {
+				    return items.sort();
+				},
+				highlighter: function (item) {
+				    var regex = new RegExp( '(' + this.query + ')', 'gi' );
+				    return item.replace( regex, "<strong>$1</strong>" );
+				},
+				updater: function (item) {
+				    selectedState = map[item].stateCode;
+				    return item;
+				}
+		});
 });
 </script>

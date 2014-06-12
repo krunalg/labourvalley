@@ -91,6 +91,9 @@ class Module extends \Commons\Module implements AutoloaderProviderInterface
                     ->get('AuthenticationPlugin')
                     ->doAuthorization($e);
             },998);
+            //$viewModel = $e->getViewModel();
+            //print_r($sm->get('config')['api_keys']['google']);
+            //$viewModel->setVariable('config',"fuckyou");
         } catch (\Exception $ex) {
             echo $ex->getMessage();
         }

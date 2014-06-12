@@ -83,8 +83,8 @@ class CitiesController extends AbstractController
         $city = new City();
         $isAjax = $request->isXmlHttpRequest();
         if ($isAjax) {
-            $result = $city->fetchCity($id);
-            echo json_encode($result);
+            $result = $city->fetchCities($id);
+            echo json_encode($result->toArray());
         }
         exit();
     }

@@ -31,7 +31,7 @@ class AreasController extends AbstractController
         ));
         $request = $this->getRequest();
         $areaList = $area->fetchAreas()->toArray();
-        print_r($areaList);
+        //print_r($areaList);
         if ($request->isPost()) {
             $areaForm->setInputFilter($area->getInputFilter());
             $areaForm->setData($request->getPost());
@@ -67,12 +67,12 @@ class AreasController extends AbstractController
     public function deleteAction()
     {
         $id = $this->params('id');
-        $city = new City();
-        $status = $city->deleteCity($id);
+        $area = new Area();
+        $status = $area->deleteArea($id);
         if ($status) {
             $this->flashMessenger()->addSuccessMessage('Area has been deleted successfully');
         } else {
-            $this->flashMessenger()->addErrorMessage('Failed! Area has not been deleted');
+            $this->flashMessenger()->addErrorMessage('Failed! area has not been deleted');
         }
         $this->redirect()->toRoute('area-add');
     }
@@ -83,10 +83,10 @@ class AreasController extends AbstractController
         $id = $this->params('id');
         $viewModel = new ViewModel();
         $viewModel->setTerminal(true);
-        $city = new City();
+        $area = new Area();
         $isAjax = $request->isXmlHttpRequest();
         if ($isAjax) {
-            $result = $city->fetchCity($id);
+            $result = $area->fetchArea($id);
             echo json_encode($result);
         }
         exit();

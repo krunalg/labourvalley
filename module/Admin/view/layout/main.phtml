@@ -1,3 +1,4 @@
+<?php echo $this->config; ?>
 <?php echo $this->doctype(); ?>
 <html lang="en">
 <head>
@@ -17,18 +18,18 @@
             'href' => $this->basePath() . '/img/favicon.ico'
         ))
             ->prependStylesheet($this->basePath() . '/css/style.default.css')
-            ->prependStylesheet($this->basePath() . '/css/bootstrap-theme.min.css')
-            ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css')
-            ->prependStylesheet($this->basePath() . '/css/style.css');
+            ->prependStylesheet($this->basePath() . '/css/bootstrap.css')
         
         ?>
         <!-- Scripts -->
         <?php
         
         echo $this->headScript()
+        	/*->prependFile($this->basePath() . '/js/typeahead.bundle.js')*/
+        	->prependFile($this->basePath() . '/js/jquery.typing.js')
             ->prependFile($this->basePath() . '/js/custom.js')
             ->prependFile($this->basePath() . '/js/bootbox.min.js')
-            ->prependFile($this->basePath().'/js/jquery.dataTables.min.js')
+            ->prependFile($this->basePath() . '/js/jquery.dataTables.min.js')
             ->prependFile($this->basePath() . '/js/jquery.cookie.js')
             ->prependFile($this->basePath() . '/js/jquery.flot.resize.min.js')
             ->prependFile($this->basePath() . '/js/jquery.flot.min.js')
@@ -40,10 +41,11 @@
             'conditional' => 'lt IE 9'
         ))
             ->prependFile($this->basePath() . '/js/jquery.validate.min.js')
-            ->prependFile($this->basePath() . '/js/bootstrap.min.js')
+            ->prependFile($this->basePath() . '/js/bootstrap.js')
             ->prependFile($this->basePath() . '/js/jquery-migrate.min.js')
             ->prependFile($this->basePath() . '/js/jquery.min.js');
         ?>
+        <script src="https://maps.googleapis.com/maps/api/js?libraries=places,geometry&sensor=false&v=3.14"></script>
     </head>
 <body>
 

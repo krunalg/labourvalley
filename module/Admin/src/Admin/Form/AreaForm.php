@@ -14,7 +14,7 @@ class AreaForm extends Form
     {
         $state = new State();
         $allStates = $state->fetchStates()->toArray();
-        $newState = array(''=>'Select State');
+        $newState = array(''=>'Select state');
         foreach($allStates as $state){
             $newState[$state['id']] = $state['state'];
         }
@@ -50,7 +50,8 @@ class AreaForm extends Form
             'attributes' => array(
                 'required' => 'required',
                 'id'=>'city',
-                'options' => array(""=>"Select city")
+                'options' => array(""=>"Select city"),
+            	'inarrayvalidator' => false,
             )
         ));
         $this->add(array(
@@ -63,6 +64,24 @@ class AreaForm extends Form
             ),
             'options' => array(
                 'label' => 'Area'
+            )
+        ));
+        $this->add(array(
+            'name' => 'latitude',
+            'attributes' => array(
+                'type' => 'hidden'
+            ),
+            'options' => array(
+                'label' => 'Latitude'
+            )
+        ));
+        $this->add(array(
+            'name' => 'longitude',
+            'attributes' => array(
+                'type' => 'hidden'
+            ),
+            'options' => array(
+                'label' => 'Longitude'
             )
         ));
         $submitButton = new Element\Button('submit');

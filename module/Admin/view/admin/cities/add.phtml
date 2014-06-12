@@ -14,6 +14,8 @@
     ?>
             <?php
             echo $this->formElement($form->get('id'));
+            echo $this->formElement($form->get('latitude'));
+            echo $this->formElement($form->get('longitude'));
             ?>
             <?php
             echo $this->formElement($form->get('state'));
@@ -53,7 +55,7 @@ if (isset($this->cities) && ! empty($this->cities)) {
 				</tr>
 			<?php }}else{ ?>
 			     <tr>
-					<td colspan="2">No cities found</td>
+					<td colspan="3">No cities found</td>
 				</tr>
 			<?php } ?>	
 			</tbody>

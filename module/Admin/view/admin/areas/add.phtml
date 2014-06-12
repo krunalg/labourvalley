@@ -13,19 +13,21 @@
     echo $this->form()->openTag($form);
     ?>
             <?php
-                echo $this->formElement($form->get('id'));
+            echo $this->formElement($form->get('id'));
+            echo $this->formElement($form->get('latitude'));
+            echo $this->formElement($form->get('longitude'));
             ?>
             <?php
-                echo $this->formElement($form->get('state'));
-                echo $this->formElementErrors($form->get('state'));
+            echo $this->formElement($form->get('state'));
+            echo $this->formElementErrors($form->get('state'));
             ?>
             <?php
-                echo $this->formElement($form->get('city'));
-                echo $this->formElementErrors($form->get('city'));
+            echo $this->formElement($form->get('city'));
+            echo $this->formElementErrors($form->get('city'));
             ?>
             <?php
-                echo $this->formElement($form->get('area'));
-                echo $this->formElementErrors($form->get('area'));
+            echo $this->formElement($form->get('area'));
+            echo $this->formElementErrors($form->get('area'));
             ?>
             <p>
 				<?php echo $this->formElement($form->get('submit')); ?>
@@ -47,17 +49,17 @@ if (isset($this->areas) && ! empty($this->areas)) {
         ?>
 				<tr>
 					<td><?php echo $area['area']; ?></td>
-					<td><?php echo $area['city']; ?></td>
+					<td><?php echo $area['city_name']; ?></td>
 					<td><a href="javascript:void(0);"
 						id="edit-<?php echo $area['id']; ?>"
-						class="btn btn-info edit-city"><i class="iconfa-pencil"></i></a> <a
+						class="btn btn-info edit-area"><i class="iconfa-pencil"></i></a> <a
 						href="/area/delete/<?php echo $area['id']; ?>"
 						class="btn btn-danger delete-item"><i
 							class="icon-trash icon-white"></i></a></td>
 				</tr>
 			<?php }}else{ ?>
 			     <tr>
-					<td colspan="2">No areas found</td>
+					<td colspan="3">No areas found</td>
 				</tr>
 			<?php } ?>	
 			</tbody>
@@ -68,7 +70,7 @@ if (isset($this->areas) && ! empty($this->areas)) {
 <script>
 jQuery(document).ready(function(){
 	jQuery("#area-form").validate();
-	/*if(jQuery('#dyntable').length > 0) {
+	if(jQuery('#dyntable').length > 0) {
 		jQuery('#dyntable').dataTable({
 			"sPaginationType": "full_numbers",
 			"bFilter": false,
@@ -77,15 +79,9 @@ jQuery(document).ready(function(){
 				//jQuery.uniform.update();
 			}
 		});
-	}*/
-	jQuery("#state").on("change",function(){
-		jQuery.ajax({
-			url:"/fetch/cities/"+jQuery.trim(jQuery(this).val()),
-			type:"get",
-			success:function(){
-				console.log("success")
-			}
-		});
+	}
+    jQuery("#state").on("change",function(){
+        bindCitiesAjax(jQuery(this), jQuery("#city"));
 	});
 });
 </script>

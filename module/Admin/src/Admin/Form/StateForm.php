@@ -30,10 +30,30 @@ class StateForm extends Form
                 'type' => 'text',
                 'required' => 'required',
                 'id' => 'state',
-                'placeholder' => 'State'
+                'placeholder' => 'State',
+            		'class'=>'typehead',
+                'autocomplete'=>'off'
             ),
             'options' => array(
                 'label' => 'State'
+            )
+        ));
+        $this->add(array(
+            'name' => 'latitude',
+            'attributes' => array(
+                'type' => 'hidden'
+            ),
+            'options' => array(
+                'label' => 'Latitude'
+            )
+        ));
+        $this->add(array(
+            'name' => 'longitude',
+            'attributes' => array(
+                'type' => 'hidden'
+            ),
+            'options' => array(
+                'label' => 'Longitude'
             )
         ));
         $submitButton = new Element\Button('submit');

@@ -103,7 +103,7 @@ return array(
             'city-get' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/city/get[/:id]',
+                    'route' => '/cities/get[/:id]',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Admin\Controller',
                         'controller' => 'Cities',

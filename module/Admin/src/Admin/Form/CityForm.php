@@ -55,6 +55,24 @@ class CityForm extends Form
                 'label' => 'City'
             )
         ));
+        $this->add(array(
+            'name' => 'latitude',
+            'attributes' => array(
+                'type' => 'hidden'
+            ),
+            'options' => array(
+                'label' => 'Latitude'
+            )
+        ));
+        $this->add(array(
+            'name' => 'longitude',
+            'attributes' => array(
+                'type' => 'hidden'
+            ),
+            'options' => array(
+                'label' => 'Longitude'
+            )
+        ));
         $submitButton = new Element\Button('submit');
         $submitButton->setName('submit')
             ->setLabel('Submit')
