@@ -19,13 +19,9 @@ class State extends AbstractModel implements InputFilterAwareInterface
 
     public $longitude;
 
-    public $created_by = null;
+    public $created_at;
 
-    public $modified_by = null;
-
-    public $created;
-
-    public $modified;
+    public $last_updated_at;
 
     protected $_db_table_name = 'Admin\Model\DbTable\StateTable';
 
@@ -44,10 +40,10 @@ class State extends AbstractModel implements InputFilterAwareInterface
         $writeGateway = $this->getDbTable()->getWriteGateway();
         try {
             if (isset($data['id']) && $data['id'] == "") {
-                $data['created'] = date("Y-m-d h:i:s");
+                $data['created_at'] = date("Y-m-d h:i:s");
                 $rowsAffected = $writeGateway->insert($data);
             } else {
-                $data['modified'] = date("Y-m-d h:i:s");
+                $data['last_updated_at'] = date("Y-m-d h:i:s");
                 $rowsAffected = $writeGateway->update($data, array(
                     'id' => $this->id
                 ));
