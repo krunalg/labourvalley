@@ -1,0 +1,6 @@
+[16-Jun-2014 14:19:03 America/Denver] PHP Fatal error:  Uncaught exception 'RuntimeException' with message 'Unable to load ZF2. Run `php composer.phar install` or define a ZF2_PATH environment variable.' in /home1/viseshas/public_html/cms.grubfiesta.com/init_autoloader.php:49
+Stack trace:
+#0 /home1/viseshas/public_html/cms.grubfiesta.com/public/index.php(36): require()
+#1 {main}
+  thrown in /home1/viseshas/public_html/cms.grubfiesta.com/init_autoloader.php on line 49
+[16-Jun-2014 14:22:01 America/Denver] PHP Fatal error:  Class 'Commons\Controller\AbstractController' not found in /home1/viseshas/public_html/cms.grubfiesta.com/module/Admin/src/Admin/Controller/AreasController.php on line 19
