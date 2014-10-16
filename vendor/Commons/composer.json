@@ -1,0 +1,27 @@
+{
+    "name": "Commons",
+    "description": "A set of genetic (abstract) classes which are commonly used across multiple modules.",
+    "type": "library",
+    "keywords": [
+        "zf2"
+    ],
+    "homepage": "https://github.com/krunalg/labourvalley",
+    "authors": [
+        {
+            "name": "Krunal Goswami",
+            "email": "krunal@codebyte.in",
+            "homepage": "http://codebyte.in/"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3"
+    },
+    "autoload": {
+        "psr-0": {
+            "Commons": "src/"
+        },
+        "classmap": [
+            "./Module.php"
+        ]
+    }
+}

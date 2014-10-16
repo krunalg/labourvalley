@@ -23,13 +23,9 @@ class Area extends AbstractModel implements InputFilterAwareInterface
     
     public $longitude;
 
-    public $created_by = null;
+    public $created_at;
 
-    public $modified_by = null;
-
-    public $created;
-
-    public $modified;
+    public $last_updated_at;
 
     protected $_db_table_name = 'Admin\Model\DbTable\AreaTable';
 
